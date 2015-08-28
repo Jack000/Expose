@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge"/> 
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+		<title>{{sitetitle}} - {{gallerytitle}}</title>
+		<link href='http://fonts.googleapis.com/css?family=Amiri:400,400italic' rel='stylesheet' type='text/css'>
+		<link type="text/css" rel="stylesheet" media="all" href="{{basepath}}global.css" />
+		<script src="{{basepath}}jquery-1.11.0.js"></script>
+		<script src="{{basepath}}global.js"></script>
+	</head>
+<body data-resolution="{{resolution}}">
+<div id="top">
+	<div id="nav">
+		{{navigation}}
+	</div>
+	<div class="wrapper">
+		<div class="author">
+			<img src="{{basepath}}img/camera.png" alt="" />
+			<span class="title">
+			{{sitetitle}}
+			<span class="subscript">{{gallerytitle}}</span>
+			</span>
+			
+		</div>
+		
+		<a href="#" id="nav_toggle"><span class="arrow_circle"><span class="arrow_down"></span></span><span class="moretext">More Stories</a></a>
+	</div>
+</div>
+
+<div class="wrapper">
+	{{content}}
+	
+	<div id="comments">
+	<div id="disqus_thread"></div>
+	</div>
+	
+	<script type="text/javascript">
+		var disqus_shortname = '{{disqus_shortname}}';
+		
+		if(disqus_shortname){
+			(function() {
+				var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+				dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+				(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+			})();
+		}
+	</script>
+	
+	<div id="footer">
+	<div class="author center">
+		<img src="{{basepath}}img/camera.png" alt="" />
+		<span class="title">
+		{{sitetitle}}
+		<span class="subscript">{{gallerytitle}}</span>
+		</span>
+	</div>
+	
+</div>
+
+<div id="fullscreenvideo"></div>
+<div id="fullscreen"></div>
+
+</div>
+
+
+</body>
+</html>
