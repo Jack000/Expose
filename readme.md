@@ -29,7 +29,7 @@ for permanent use add this line to your ~/.profiles, ~/.bashrc etc depending on 
 	cd ~/folderofimages
 	expose
 
-The script operates on your current working directory, and outputs a _sites directory.
+The script operates on your current working directory, and outputs a _site directory.
 Configuration and settings can be edited in the expose.sh file itself
 
 ### Flags
@@ -52,7 +52,7 @@ Images are sorted by alphabetical order. To arbitrarily order images, add a nume
 
 ### Organization
 
-You can put images in folders to organize them. The folders can be nested any number of times, and are also sorted alphabetically. Keep in mind the url of each gallery corresponds to the relative path of the folder.
+You can put images in folders to organize them. The folders can be nested any number of times, and are also sorted alphabetically. The folder structure is used to generate a nested html menu.
 
 To arbitrarily order folders, add a numerical prefix to the folder name. Any numerical prefixes are stripped from the url.
 
@@ -60,19 +60,19 @@ To arbitrarily order folders, add a numerical prefix to the folder name. Any num
 
 ### Text metadata
 
-YAML in the text file is read and made available to the template. The variables depend on the template used.
+YAML in the text file is read and made available to the theme. The variables depend on the theme used.
 
 ### Theme-1 specific options
 
 	---
-	top: 50
-	left: 50
-	width: 40
-	height: 50
+	top: 30
+	left: 5
+	width: 30
+	height: 20
 	textcolor: #ffffff
 	---
 
-![content dimensions](http://jack.works/exposeimages/dimensions.jpg)
+![content dimensions](http://jack.works/exposeimages/dimensionvariables.jpg)
 
 The units are in percentages
 
@@ -173,3 +173,4 @@ Timelapse and stop-motion are a great way to add motion to a scene. If your fold
 ![Image sequence](http://jack.works/exposeimages/imagesequence.jpg)
 
 By default the video is encoded at 24fps.
+
