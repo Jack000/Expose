@@ -77,11 +77,12 @@ YAML in the text file is read and made available to the theme. The variables dep
 The units are in percentages
 
 	---
-	top: 75
-	left: 40
+	top: 12
+	left: 50
 	width: 40
-	height: 20
-	polygon:[{"x":30, "y":0},{"x":100, "y":0},{"x":100, "y":100},{"x":0, "y":100}]
+	height: 30
+	polygon:[{"x":5, "y":0},{"x":100, "y":0},{"x":100, "y":100},{"x":7, "y":55}, {"x":0, "y":16}]
+	textcolor: #ff9518
 	---
 
 Use a polygon to wrap text around shapes. The polygon is defined by 3 or more points in a JSON blob. Units are again in percentages.
@@ -93,20 +94,21 @@ Use a polygon to wrap text around shapes. The polygon is defined by 3 or more po
 	---
 	width: 32.5
 	---
-	
+
+In theme-2 the width variable acts on the image rather than the content. You can use this to tile images in a row:
+
 ![changing width](http://jack.works/exposeimages/widthoption.jpg)
 
-In theme-2 the width variable acts on the image rather than the content.
+Note that in this theme the text goes above its associated image, except the first image which is used as a masthead.
 
 ### Metadata file
 
-If you want certain variables to apply to an entire gallery, place a metadata.txt file in the gallery directory. eg. in metadata.txt:
+If you want certain variables to apply to an entire gallery, place a metadata.txt (this is configurable) file in the gallery directory. eg. in metadata.txt:
 	
-	textcolor: #ff0000
+	textcolor: #ff0000	
 
-![redtext](http://jack.works/exposeimages/redtext.jpg)
+To give all images in a gallery red text. Metadata file parameters are overriden by metadata in individual posts.
 	
-
 ### Advanced usage
 
 ### Video options
