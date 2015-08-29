@@ -172,7 +172,7 @@ A full list of Imagemagick options can be [found here](http://www.imagemagick.or
 
 Timelapse and stop-motion are a great way to add motion to a scene. If your folder contains the key word "imagesequence" (this is configurable), the images in the folder will be converted to a video. Video options and filters may be applied to image sequences.
 
-![Image sequence](http://jack.works/exposeimages/imagesequence.jpg)
+![Image sequence](http://jack.works/exposeimages/imagesequence.gif)
 
 By default the video is encoded at 24fps.
 
