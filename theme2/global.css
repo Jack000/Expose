@@ -52,11 +52,9 @@ left: 50%;
 }
 
 .author img{
-border: 2px solid #ddd;
-border-radius: 2em;
 float: left;
-margin: 20px 1.1em 0 0;
-width: 2em;
+margin: 25px 0.5em 0 0;
+width: 1.5em;
 }
 
 .author .title{
