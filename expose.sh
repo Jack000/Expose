@@ -14,7 +14,7 @@ resolution=(3840 2560 1920 1280 1024 640)
 jpeg_quality=92
 
 # formats to encode to, list in order of preference. Available formats are vp9, vp8, h264, ogv
-video_formats=(h264)
+video_formats=(h264 vp8 ogv)
 
 # video quality - target bitrates in MBit/s matched to each resolution
 # feel free to ignore this if you don't have any videos.
@@ -709,11 +709,26 @@ do
 			for j in "${!resolution[@]}"
 			do
 				res="${resolution[$j]}"
-				if [ ! -s "$topdir/_site/$url/$res.mp4" ]
-				then
-					seqfinished=false
-					break
-				fi
+				
+				for vformat in "${video_formats[@]}"
+				do				
+					videofile="$res-$vformat."
+					
+					for k in "${!video_format_extensions[@]}"
+					do
+						if [ "${video_format_extensions[k]}" = "$vformat" ]
+						then
+							videofile+="${video_format_extensions[k+1]}"
+							break
+						fi
+					done
+					
+					if [ ! -s "$topdir/_site/$url/$videofile" ]
+					then
+						seqfinished=false
+						break
+					fi
+				done
 			done
 			
 			if [ "$seqfinished" = true ]
