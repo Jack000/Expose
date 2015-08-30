@@ -43,7 +43,7 @@ text_toggle=true
 social_button=true
 
 # option to put the full image/video in a zip file with a license readme.txt
-download_button=true
+download_button=false
 download_readme="All rights reserved"
 
 # disqus forum name. Leave blank to disable comments
@@ -213,7 +213,7 @@ do
 	nav_name+=("$node_name")
 	nav_depth+=("$node_depth")
 	nav_type+=("$node_type")
-done < <(find "$topdir" -type d ! -path "$topdir*/_*"| sort)
+done < <(find "$topdir" -type d ! -path "$topdir*/_*" | sort)
 
 # re-create directory structure
 mkdir -p "$topdir/_site"
@@ -721,6 +721,9 @@ do
 				continue
 			fi
 			
+			echo "Compiling sequence images"
+			
+			# ffmpeg's image sequence feature is oddly limited and can't accept arbitrarily named files, copy to scratch dir as sequentially named files
 			j=0
 			while read seqfile
 			do
@@ -728,11 +731,9 @@ do
 				cp "$seqfile" "$scratchdir/$tempname"
 				((j++))
 			done < <(find "$filepath" -maxdepth 1 ! -path "$filepath" | sort)
-			
 			sequencevideo="$scratchdir/sequencevideo.mp4"
-			chmod -R 740 "$sequencevideo"
 			
-			maxres=$(printf '%s\n' "${resolution[@]}" | sort | tail -n 1)
+			maxres=$(printf '%s\n' "${resolution[@]}" | sort -n | tail -n 1)
 			
 			ffmpeg -loglevel error -f image2 -y -i "$scratchdir/%04d" -c:v libx264 -threads "$ffmpeg_threads" -vf scale="$maxres:trunc(ow/a/2)*2" -profile:v high -pix_fmt yuv420p -preset "$h264_encodespeed" -crf 15 -r "$sequence_framerate" -f mp4 "$sequencevideo"
 			
