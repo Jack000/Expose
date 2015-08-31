@@ -92,12 +92,14 @@ Use a polygon to wrap text around shapes. The polygon is defined by 3 or more po
 ### Theme-2 specific options
 
 	---
-	width: 32.5
+	width: 19
 	---
 
-In theme-2 the width variable acts on the image rather than the content. You can use this to tile images in a row:
+In theme-2 the width variable acts on the image rather than the content. You can use this to tile images in a row or to form a grid:
 
-![changing width](http://jack.works/exposeimages/widthoption.jpg)
+![image grid](http://jack.works/exposeimages/grid.jpg)
+
+Clicking on each image shows it in full screen mode.
 
 Note that in this theme the text goes above its associated image, except the first image which is used as a masthead.
 
