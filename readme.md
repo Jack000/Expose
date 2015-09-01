@@ -10,7 +10,7 @@ If you're into photography, you probably have folders of images and videos like 
 
 Expose is a Bash script that turns those images into photoessays similar to [jack.ventures](http://jack.ventures) or [jack.works](http://jack.works) (my personal blogs)
 
-If you're not a fan of that look, a [Medium-style theme](http://jack.ventures/sample/inner-mongolia) is also included
+If you're not a fan of that look, a [Medium-style theme](http://jack.ventures/sample/inner-mongolia) is included
 
 tested on Windows/Cygwin, OSX, and should be fine on Linux
 
@@ -38,7 +38,10 @@ Configuration and settings can be edited in the expose.sh file itself
 	expose -p
 
 The d flag enables draft mode, where only a single low resolution is encoded. This can be used for a quick preview or for layout purposes.
+
 The p flag enables progressive mode, where HTML files are not generated if they already exist. This saves time if you're just adding a new gallery instead of updating old ones.
+
+Generated images and videos are not overwritten, to do a completely clean build delete the existing _site directory first.
 
 ### Adding text
 
