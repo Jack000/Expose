@@ -8,7 +8,7 @@ If you're into photography, you probably have folders of images and videos like 
 
 ![a bunch of images](http://jack.works/exposeimages/folder.jpg)
 
-Expose is a Bash script that turns those images into photoessays similar to [jack.ventures](http://jack.ventures) or [jack.works](http://jack.works) (my personal blogs)
+Expose is a Bash script that turns those images *and videos* into a photoessay similar to [jack.ventures](http://jack.ventures) or [jack.works](http://jack.works) (my personal blogs)
 
 If you're not a fan of that look, a [Medium-style theme](http://jack.ventures/sample/inner-mongolia) is included
 
