@@ -37,9 +37,9 @@ Configuration and settings can be edited in the expose.sh file itself
 	expose -d
 	expose -p
 
-The d flag enables draft mode, where only a single low resolution is encoded. This can be used for a quick preview or for layout purposes.
+The -d flag enables draft mode, where only a single low resolution is encoded. This can be used for a quick preview or for layout purposes.
 
-The p flag enables progressive mode, where HTML files are not generated if they already exist. This saves time if you're just adding a new gallery instead of updating old ones.
+The -p flag enables progressive mode, where HTML files are not generated if they already exist. This saves time if you're just adding a new gallery instead of updating old ones.
 
 Generated images and videos are not overwritten, to do a completely clean build delete the existing _site directory first.
 
@@ -131,7 +131,7 @@ This will cut the video 10 seconds from the start, with a duration of 5 seconds.
 	---
 	
 If you're like me and shoot video in log profile, doing post work can be a pain. I like to globally apply a film print emulation LUT for a consistent look. Note that FFmpeg will look for the LUT file in the working directory you started the script in.
-Notably FFmpeg does not support .look LUTs, so you'll have to convert them to one of .cube .3dl .dat or .m3d
+FFmpeg does not support .look LUTs, so you'll have to convert them to one of .cube .3dl .dat or .m3d
 
 ![3d LUT](http://jack.works/exposeimages/lut3d.jpg)
 
