@@ -35,10 +35,10 @@ Configuration and settings can be edited in the expose.sh file itself
 ### Flags
 
 	expose -d
-	expose -f
+	expose -p
 
 The d flag enables draft mode, where only a single low resolution is encoded. This can be used for a quick preview or for layout purposes.
-The f flag overwrites the current _site. Note that images/videos are not overwritten, only HTML. This is meant for updating the text content of the site.
+The p flag enables progressive mode, where HTML files are not generated if they already exist. This saves time if you're just adding a new gallery instead of updating old ones.
 
 ### Adding text
 

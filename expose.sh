@@ -73,9 +73,9 @@ topdir=$(pwd)
 scriptdir=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
 draft=false
-overwrite=false
+overwrite=true
 # the -d flag has been set
-while getopts ":d:f" opt; do
+while getopts ":d:p" opt; do
   case "$opt" in
     d)
 		echo "Draft mode On"
@@ -86,9 +86,9 @@ while getopts ":d:f" opt; do
 		video_formats=(h264)
 		download_button=false
 		;;
-	f)
-		echo "Overwrite HTML On"
-		overwrite=true
+	p)
+		echo "Progressive generation On"
+		overwrite=false
 		;;
     \?)
       echo "Invalid option: -$OPTARG" >&2
