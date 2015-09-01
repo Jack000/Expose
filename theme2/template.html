@@ -7,10 +7,10 @@
 		<title>{{sitetitle}} - {{gallerytitle}}</title>
 		<link href='http://fonts.googleapis.com/css?family=Amiri:400,400italic' rel='stylesheet' type='text/css'>
 		<link type="text/css" rel="stylesheet" media="all" href="{{basepath}}global.css" />
-		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 		<script src="{{basepath}}global.js"></script>
 	</head>
-<body data-resolution="{{resolution}}">
+<body data-resolution="{{resolution}}" data-respath="{{resourcepath}}">
 <div id="top">
 	<div id="nav">
 		{{navigation}}
@@ -29,7 +29,7 @@
 	</div>
 </div>
 
-<div class="wrapper">
+<div class="wrapper" id="main">
 	{{content}}
 	
 	<div id="comments">
