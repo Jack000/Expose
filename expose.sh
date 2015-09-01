@@ -14,7 +14,7 @@ resolution=(3840 2560 1920 1280 1024 640)
 jpeg_quality=92
 
 # formats to encode to, list in order of preference. Available formats are vp9, vp8, h264, ogv
-video_formats=(h264 vp8 ogv)
+video_formats=(h264 vp8)
 
 # video quality - target bitrates in MBit/s matched to each resolution
 # feel free to ignore this if you don't have any videos.
