@@ -12,9 +12,12 @@ $(document).ready(function(){
 	resourcepath = $('body').data('respath');
 	
 	// set slide heights to prevent reflow
-	var mainwidth = $('#main').eq(0).width();
+	var mainwidth = $('#main').width();
+	
+	$('.image.index1').css('width','125%'); // first image is masthead, do not allow content override
+	
 	$('.image').each(function(){
-		$(this).css('padding-top', (100*$(this).data('maxheight')/$(this).data('maxwidth')) * ($(this).width()/mainwidth) + '%');
+		$(this).css('padding-top', (100*$(this).data('maxheight')/$(this).data('maxwidth'))*($(this).width()/mainwidth) + '%');
 	});
 	
 	$.each($('body').data('resolution').split(" "),function(i, v){
@@ -34,7 +37,7 @@ $(document).ready(function(){
 	var color = $('.image.index1').data('color6');
 	$('#top .author img, .arrow_circle').css('border-color',color);
 	$('#top .title .subscript, #nav_toggle').css('color',color);
-	$('.image.index1').css('width','125%');
+	
 	$('.image.index1').append('<div class="overlay" style="background-color: '+$('.image.index1').data('color2')+'"></div>');
 	$('.image').not('.index1, .fullwidth').click(function(){
 		// full screen mode
