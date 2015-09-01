@@ -73,9 +73,8 @@ topdir=$(pwd)
 scriptdir=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
 draft=false
-overwrite=true
 # the -d flag has been set
-while getopts ":d:p" opt; do
+while getopts ":d" opt; do
   case "$opt" in
     d)
 		echo "Draft mode On"
@@ -85,10 +84,6 @@ while getopts ":d:p" opt; do
 		bitrate=(4)
 		video_formats=(h264)
 		download_button=false
-		;;
-	p)
-		echo "Progressive generation On"
-		overwrite=false
 		;;
     \?)
       echo "Invalid option: -$OPTARG" >&2
@@ -421,11 +416,6 @@ do
 		continue
 	fi
 	
-	if [ -e "$topdir/_site/${nav_url[i]}"/index.html ] && [ "$overwrite" = false ]
-	then
-		continue
-	fi
-	
 	allposts=""
 	
 	gallery_metadata=""
@@ -673,16 +663,14 @@ do
 done
 
 # write top level index.html
-if [ ! -e "$topdir"/_site/index.html ] || [ "$overwrite" = true ] && [ ! -z "$firsthtml" ]
-then
-	basepath="./"
-	firsthtml=$(template "$firsthtml" basepath "$basepath")
-	firsthtml=$(template "$firsthtml" disqus_identifier "$firstpath")
-	firsthtml=$(template "$firsthtml" resourcepath "$firstpath/")
-	firsthtml=$(echo "$firsthtml" | sed "s/{{[^{}]*:\([^}]*\)}}/\1/g")
-	firsthtml=$(echo "$firsthtml" | sed "s/{{[^}]*}}//g")
-	echo "$firsthtml" > "$topdir/_site"/index.html
-fi
+
+basepath="./"
+firsthtml=$(template "$firsthtml" basepath "$basepath")
+firsthtml=$(template "$firsthtml" disqus_identifier "$firstpath")
+firsthtml=$(template "$firsthtml" resourcepath "$firstpath/")
+firsthtml=$(echo "$firsthtml" | sed "s/{{[^{}]*:\([^}]*\)}}/\1/g")
+firsthtml=$(echo "$firsthtml" | sed "s/{{[^}]*}}//g")
+echo "$firsthtml" > "$topdir/_site"/index.html
 
 printf "\nStarting encode\n"
 

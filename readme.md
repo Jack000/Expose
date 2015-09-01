@@ -35,11 +35,8 @@ Configuration and settings can be edited in the expose.sh file itself
 ### Flags
 
 	expose -d
-	expose -p
 
 The -d flag enables draft mode, where only a single low resolution is encoded. This can be used for a quick preview or for layout purposes.
-
-The -p flag enables progressive mode, where HTML files are not generated if they already exist. This saves time if you're just adding a new gallery instead of updating old ones.
 
 Generated images and videos are not overwritten, to do a completely clean build delete the existing _site directory first.
 
