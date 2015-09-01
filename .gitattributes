@@ -2,4 +2,6 @@
 * text=auto
 
 *.sh text
-*.sh -crlf
+
+# Force unix line endings
+*.sh eol=lf
