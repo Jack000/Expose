@@ -95,12 +95,12 @@ Use a polygon to wrap text around shapes. The polygon is defined by 3 or more po
 ### Theme-2 specific options
 
 	---
-	width: 19
+	width: 32.5
 	---
 
-In theme-2 the width variable acts on the image rather than the content. You can use this to tile images in a row or to form a grid:
+In theme-2 the width variable acts on the image rather than the content. You can use this to tile images in a row:
 
-![image grid](http://jack.works/exposeimages/grid.jpg)
+![image row](http://jack.works/exposeimages/widthoption.jpg)
 
 Clicking on each image shows it in full screen mode.
 
@@ -110,10 +110,12 @@ Note that in this theme the text goes above its associated image, except the fir
 
 If you want certain variables to apply to an entire gallery, place a metadata.txt (this is configurable) file in the gallery directory. eg. in metadata.txt:
 	
-	textcolor: #ff0000	
+	width: 19	
 
-To give all images in a gallery red text. Metadata file parameters are overriden by metadata in individual posts.
+![image grid](http://jack.works/exposeimages/grid.jpg)
 	
+This sets all image widths to form a grid. Metadata file parameters are overriden by metadata in individual posts.
+
 ### Advanced usage
 
 ### Video options
