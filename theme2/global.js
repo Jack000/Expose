@@ -22,7 +22,7 @@ $(document).ready(function(){
 	
 	$.each($('body').data('resolution').split(" "),function(i, v){
 		if(v){
-			resolution.push(v);
+			resolution.push(parseInt(v));
 		}
 	});
 	
