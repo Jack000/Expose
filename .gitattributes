@@ -2,3 +2,4 @@
 * text=auto
 
 *.sh text
+*.sh -crlf
