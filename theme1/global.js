@@ -24,7 +24,6 @@ $(document).ready(function(){
 	var mainwidth = $('#main').width();
 	$('.slide').each(function(){
 		$(this).css('padding-top', (100*$(this).data('imageheight')/$(this).data('imagewidth')) + '%');
-		$(this).css('height','auto');
 	});
 	
 	resourcepath = $('body').data('respath');
