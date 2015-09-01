@@ -20,6 +20,13 @@ var video_formats={
 
 $(document).ready(function(){
 
+	// set slide heights to prevent reflow
+	var mainwidth = $('#main').width();
+	$('.slide').each(function(){
+		$(this).css('padding-top', (100*$(this).data('imageheight')/$(this).data('imagewidth')) + '%');
+		$(this).css('height','auto');
+	});
+	
 	resourcepath = $('body').data('respath');
 	
 	// detect resolution
@@ -404,7 +411,7 @@ function findoverlap(elem)
     var docViewBottom = docViewTop + winHeight;
 
     var elemTop = $(elem).offset().top;
-	var elemHeight = $(elem).height();
+	var elemHeight = $(elem).outerHeight();
     var elemBottom = elemTop + elemHeight;
 	
 	var overlap = (Math.min(elemBottom, docViewBottom) - Math.max(elemTop, docViewTop));

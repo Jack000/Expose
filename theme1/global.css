@@ -429,10 +429,14 @@ float: left;
 margin: 0;
 padding: 0;
 width: 100%;
+height: auto;
 clear: both;
-min-height: 400px;
 overflow: hidden;
 position: relative;
+}
+
+#comments{
+min-height: 400px;
 }
 
 .progress{
@@ -513,10 +517,14 @@ height: 100%;
 }
 
 .image{
-float: left;
+float: none;
 width: 100%;
 height: auto;
 visibility: hidden;
+position: absolute;
+top: 0;
+left: 0;
+z-index: 1;
 }
 
 .image.active{
@@ -524,10 +532,6 @@ visibility: visible;
 }
 
 video.image{
-float: none;
-position: absolute;
-top: 0;
-left: 0;
 z-index: 2;
 }
 
