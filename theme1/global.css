@@ -4,7 +4,7 @@ padding: 0;
 border: 0;
 background-color: #000;
 color: #fff;
-font: normal 14px/22px 'latolight',helvetica, arial, sans-serif;
+font: 300 14px/22px 'Lato',helvetica, arial, sans-serif;
 width: 100%;
 height: 100%;
 padding: 0;
@@ -87,7 +87,6 @@ z-index: 10;
 -o-transition: color 1s;
 transition: color 1s;
 font-size: 14px;
-font-weight: bold;
 }
 
 #profile{
@@ -131,7 +130,7 @@ transition: background-color 1s;
 }
 
 #sidebar h1{
-font: bold 14px/18px 'latolight',helvetica, arial, sans-serif;
+font: 300 14px/18px 'Lato',helvetica, arial, sans-serif;
 margin: 0;
 padding: 32px 0 20px 5px;
 float: left;
@@ -364,7 +363,6 @@ background-color: #000;
 	-o-transition: color 1s, background-color 1s, width 0.5s;
 	transition: color 1s, background-color 1s, width 0.5s;
 	font-size: 14px;
-	font-weight: bold;
 }
 
 #share.active, #resolution.active{
@@ -487,7 +485,7 @@ top: 0;
 left: 0;
 width: 100%;
 height: 100%;
-font: normal 1em/1.6em 'latolight',helvetica, arial, sans-serif;
+font: 300 1em/1.6em 'Lato',helvetica, arial, sans-serif;
 z-index: 5;
 -moz-opacity: 1;
 -webkit-opacity: 1;
@@ -537,7 +535,7 @@ z-index: 2;
 
 .post h1, .post h2, .post h3{
 display: block;
-font: normal 4em 'latohairline',helvetica, arial, sans-serif;
+font: 100 4em 'Lato',helvetica, arial, sans-serif;
 margin: 0;
 padding: 20px 0 10px 0;
 }
@@ -554,14 +552,14 @@ padding: 10px 0 10px 0;
 
 .post h3{
 	clear: both;
-	font: normal 1.2em 'latolight',helvetica, arial, sans-serif;
+	font: 300 1.2em 'Lato',helvetica, arial, sans-serif;
 	padding: 10px 0 10px 0;
 }
 
 .post h1 .sub{
 display: block;
 margin: 10px 0 0 0;	
-font: normal 18px/22px 'latolight',helvetica, arial, sans-serif;
+font: 300 18px/22px 'Lato',helvetica, arial, sans-serif;
 }
 
 .post h2 .sub{
@@ -622,7 +620,7 @@ float: left;
 .prev a, .next a{
 display: block;
 min-height: 100px;
-font: normal 48px 'latolight',helvetica, arial, sans-serif;
+font: 300 48px 'Lato',helvetica, arial, sans-serif;
 -webkit-transition: all 0.5s;
 -moz-transition: all 0.5s;
 -ms-transition: all 0.5s;
