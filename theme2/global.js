@@ -6,8 +6,17 @@ var video_formats={
 };
 
 var resolution = [];
+var resourcepath;
 
 $(document).ready(function(){
+	resourcepath = $('body').data('respath');
+	
+	// set slide heights to prevent reflow
+	var mainwidth = $('#main').eq(0).width();
+	$('.image').each(function(){
+		$(this).css('padding-top', (100*$(this).data('maxheight')/$(this).data('maxwidth')) * ($(this).width()/mainwidth) + '%');
+	});
+	
 	$.each($('body').data('resolution').split(" "),function(i, v){
 		if(v){
 			resolution.push(v);
@@ -47,7 +56,7 @@ $(document).ready(function(){
 		}
 		
 		width = img.width();
-		var url = img.data('url');
+		var url = resourcepath + img.data('url');
 		var maxwidth = $(this).data('maxwidth');
 		var displaywidth = maxwidth;
 		$.each(resolution, function(i, v){
@@ -129,7 +138,7 @@ function scrollcheck(){
 		var overlap = findoverlap(this);
 		if( overlap > -1){
 			var img = $(this).find('img');
-			var url = img.data('url');
+			var url = resourcepath + img.data('url');
 			
 			var width = img.width();
 			var maxwidth = $(this).data('maxwidth');
@@ -225,7 +234,7 @@ function findoverlap(elem)
     var docViewBottom = docViewTop + winHeight;
 
     var elemTop = $(elem).offset().top;
-	var elemHeight = $(elem).height();
+	var elemHeight = $(elem).outerHeight();
     var elemBottom = elemTop + elemHeight;
 	
 	var overlap = (Math.min(elemBottom, docViewBottom) - Math.max(elemTop, docViewTop));
