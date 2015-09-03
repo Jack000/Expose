@@ -44,7 +44,7 @@ Generated images and videos are not overwritten, to do a completely clean build 
 
 The text associated with each image is read from any text file with the same filename as the image, eg:
 
-![images and text files](http://jack.works/exposeimages/imagetext.jpg)
+![images and text files](http://jack.works/exposeimages/imagetext2.jpg)
 
 ### Sorting
 
@@ -80,14 +80,14 @@ The units are in percentages
 	top: 12
 	left: 50
 	width: 40
-	height: 30
+	height: 50
 	polygon:[{"x":5, "y":0},{"x":100, "y":0},{"x":100, "y":100},{"x":7, "y":55}, {"x":0, "y":16}]
 	textcolor: #ff9518
 	---
 
 Use a polygon to wrap text around shapes. The polygon is defined by 3 or more points in a JSON blob. Units are again in percentages.
 
-![content polygon](http://jack.works/exposeimages/polygon.jpg)
+![content polygon](http://jack.works/exposeimages/polygon2.jpg)
 
 ### Theme-2 specific options
 
