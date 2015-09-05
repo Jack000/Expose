@@ -56,6 +56,8 @@ You can put images in folders to organize them. The folders can be nested any nu
 
 To arbitrarily order folders, add a numerical prefix to the folder name. Any numerical prefixes are stripped from the url.
 
+Any folders, images or videos with an "_" prefix are ignored and excluded from the build.
+
 ![folders](http://jack.works/exposeimages/folders.jpg)
 
 ### Text metadata
