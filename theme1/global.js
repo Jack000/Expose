@@ -309,11 +309,6 @@ function scrollcheck(){
 								});
 							}
 						}
-						/*else{
-							$(this).find('video source').each(function(){
-								$(this).prop('src', $(this).data('source'));
-							});
-						}*/
 						
 					}
 				}
@@ -321,7 +316,6 @@ function scrollcheck(){
 			}
 			else{
 				// keeping all videos takes too much memory, reset as we go along
-				//$(this).find('video').addClass('blank').find('source').prop('src','//:0');
 				$(this).find('img.image').addClass('blank');
 				$(this).find('video, .progress').remove();
 			}
@@ -435,7 +429,6 @@ function fillpolygon(content, polygon){
 	var cheight = content.height();
 
 	content.contents().each(function(){
-		//var n = this.nodeName.toLowerCase();
 		var isblock = false;
 		var samefont = true;
 		if(this.nodeType == 1){
