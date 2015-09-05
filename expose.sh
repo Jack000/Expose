@@ -143,6 +143,8 @@ scratchdir=$(mktemp -d 2>/dev/null || mktemp -d -t 'exposetempdir')
 scratchdir=$(winpath "$scratchdir")
 chmod -R 740 "$scratchdir"
 
+output_url=""
+
 cleanup() {
 	# remove any ffmpeg log/temp files
 	rm -f ffmpeg*.log
@@ -153,6 +155,11 @@ cleanup() {
     then
         rm -r "$scratchdir"
     fi
+	
+	if [ -e "$output_url" ]
+	then
+		rm -f "$output_url"
+	fi
 	
 	exit
 }
@@ -851,7 +858,9 @@ do
 				done
 			done
 		fi
-				
+		
+		output_url=""
+		
 		ffmpeg -loglevel error -i "$filepath" $options -vf "select=gte(n\,1)$filters" -vframes 1 -qscale:v 2 "$scratchdir/temp.jpg"
 		image="$scratchdir/temp.jpg"
 	fi
