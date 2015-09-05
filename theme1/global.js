@@ -60,7 +60,7 @@ $(document).ready(function(){
 	});
 	
 	// build resolution selector
-	$.each($('body').data('resolution').split(" "),function(i, v){
+	$.each(String($('body').data('resolution')).split(" "),function(i, v){
 		if(v){
 			resolution.push(parseInt(v));
 		}
@@ -281,7 +281,7 @@ function scrollcheck(){
 					if(i-index >= 0 && i-index <= videoloadnext){ // preload next N videos
 						if($(this).find('video').length == 0){
 
-							var formats = $(this).data("videoformats").split(" ");
+							var formats = String($(this).data("videoformats")).split(" ");
 							if(formats.length > 0){
 								var vidstring = '<div class="progress active"><div class="bar" style="background-color: '+$(this).parent().data('textcolor')+'"></div></div>';
 								vidstring += '<video class="image" poster="' + url+'/'+set_res+'.jpg" alt="" autoplay="autoplay" loop="loop" preload="auto" width="'+$(this).width()+'" height="'+$(this).height()+'">'

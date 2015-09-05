@@ -4,7 +4,7 @@
 
 site_title="My Awesome Photos"
 
-theme_dir="theme1"
+theme_dir="theme2"
 
 # widths to scale images to (heights are calculated from source images)
 # you might want to change this for example, if your images aren't full screen on the browser side

@@ -20,7 +20,7 @@ $(document).ready(function(){
 		$(this).css('padding-top', (100*$(this).data('maxheight')/$(this).data('maxwidth'))*($(this).width()/mainwidth) + '%');
 	});
 	
-	$.each($('body').data('resolution').split(" "),function(i, v){
+	$.each(String($('body').data('resolution')).split(" "),function(i, v){
 		if(v){
 			resolution.push(parseInt(v));
 		}
@@ -158,7 +158,7 @@ function scrollcheck(){
 			// videos
 			if($(this).data('type') == 'video'){
 				if($(this).find('video').length == 0){
-					var formats = $(this).data("videoformats").split(" ");
+					var formats = String($(this).data("videoformats")).split(" ");
 					if(formats.length > 0){
 						var vidstring = '<div class="progress active"><div class="bar" style="background-color: '+$(this).data('textcolor')+'"></div></div>';
 						vidstring += '<video poster="'+url+'/'+displaywidth+'.jpg" alt="" autoplay="autoplay" loop="loop" preload="auto">'
