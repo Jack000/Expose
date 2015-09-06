@@ -131,7 +131,7 @@ This will cut the video 10 seconds from the start, with a duration of 5 seconds.
 	video-filters: lut3d=file=fuji3510.cube
 	---
 	
-If you're like me and shoot video in log profile, doing post work can be a pain. I like to globally apply a film print emulation LUT for a consistent look. Note that FFmpeg will look for the LUT file in the working directory you started the script in.
+If you're like me and shoot video in log profile, doing post work can be a pain. I like to globally apply a [film print emulation LUT](http://juanmelara.com.au/print-film-emulation-luts-for-download/) for a consistent look. Note that FFmpeg will look for the LUT file in the working directory you started the script in.
 FFmpeg does not support .look LUTs, so you'll have to convert them to one of .cube .3dl .dat or .m3d
 
 ![3d LUT](http://jack.works/exposeimages/lut3d.jpg)
@@ -148,11 +148,13 @@ A full list of FFmpeg filters can be [found here](https://ffmpeg.org/ffmpeg-filt
 
 Similar to videos, we can leverage the image editing features of Imagemagick.
 
+Things like cropping and color correction are very visual operations that's hard to do in command line. Most people would shoot in RAW and export a jpeg anyways, so a lot of ImageMagick's CLI options won't be very useful. However, it is very handy for non-destructively applying effects across an entire gallery, eg:
+
 	---
-	image-options: -gravity Center -crop 100%x75%+0+0
+	image-options: watermark.png -gravity SouthEast -geometry +50+50 -composite 
 	---
 
-If you have a camera that shoots 4:3, but you want to crop down to 16:9. This will crop the image equally from top and bottom for the correct aspect ratio.
+You can use this to apply a watermark on the bottom right corner of the image, with a 50 pixel margin from the edge.
 
 	---
 	image-options: -sharpen 0x1.5
@@ -164,7 +166,7 @@ Sharpens the image with a 1.5 pixel radius
 	image-options: -hald-clut transform.png
 	---
 
-Imagemagick does not read LUTs natively, but will accept a Hald color lookup image. This image can be created in photoshop or other graphics package by applying your LUT to the Hald identity CLUT.
+Imagemagick does not read LUTs natively, but will accept a Hald color lookup image. This image can be created in photoshop or other graphics package by applying your LUT to the [Hald identity CLUT image](http://www.quelsolaar.com/technology/clut.html)
 
 	---
 	image-options: -colorspace Gray -sigmoidal-contrast 5,50%
