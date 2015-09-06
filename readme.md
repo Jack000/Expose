@@ -148,13 +148,13 @@ A full list of FFmpeg filters can be [found here](https://ffmpeg.org/ffmpeg-filt
 
 Similar to videos, we can leverage the image editing features of Imagemagick.
 
-Things like cropping and color correction are very visual operations that's hard to do in command line. Most people would shoot in RAW and export a jpeg anyways, so a lot of ImageMagick's CLI options won't be very useful. However, it is very handy for non-destructively applying effects across an entire gallery, eg:
+Things like cropping and color correction are very visual operations that are hard to do in command line. Most people would shoot in RAW and export as jpeg anyways, so a lot of ImageMagick's CLI options won't be very useful. However, it is very handy for non-destructively applying effects across an entire gallery, eg:
 
 	---
 	image-options: watermark.png -gravity SouthEast -geometry +50+50 -composite 
 	---
 
-You can use this to apply a watermark on the bottom right corner of the image, with a 50 pixel margin from the edge.
+You can use this to apply a watermark on the bottom right corner, with a 50 pixel margin from the edge.
 
 	---
 	image-options: -sharpen 0x1.5
