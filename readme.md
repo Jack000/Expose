@@ -134,7 +134,9 @@ This will cut the video 10 seconds from the start, with a duration of 5 seconds.
 If you're like me and shoot video in log profile, doing post work can be a pain. I like to globally apply a [film print emulation LUT](http://juanmelara.com.au/print-film-emulation-luts-for-download/) for a consistent look. Note that FFmpeg will look for the LUT file in the working directory you started the script in.
 FFmpeg does not support .look LUTs, so you'll have to convert them to one of .cube .3dl .dat or .m3d
 
-![3d LUT](http://jack.works/exposeimages/lut3d.jpg)
+![3d LUT](http://jack.works/exposeimages/lut3d.png)
+
+Here I use a nice low-contrast LUT I [found online](http://caseywilsondp.com/2015/03/25/a7s-slog2-rec709-lut/) with excellent highlight rolloff for a cinematic look.
 
 	---
 	video-filters: deshake,unsharp=6:6:3,lutyuv="u=128:v=128"
