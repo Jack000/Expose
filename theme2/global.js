@@ -1,7 +1,7 @@
 var video_formats={
 	h264: { extension: "mp4", type: "video/mp4"},
-	vp9: { extension: "webm", type: "video/webm"},
-	vp8: { extension: "webm", type: "video/webm"},
+	vp9: { extension: "webm", type: "video/webm; codecs=vp9"},
+	vp8: { extension: "webm", type: "video/webm; codecs=vp8"},
 	ogv: { extension: "ogv", type: "video/ogg"}
 };
 
