@@ -1,4 +1,4 @@
-## Expose 2.0
+## Expose
 
 A simple static site generator for photoessays
 
