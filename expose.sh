@@ -896,11 +896,6 @@ do
 		fi
 	done
 	
-	if [ "${gallery_type[i]}" = 1 ]
-	then
-		options="" # don't apply image options to a video
-	fi
-	
 	# write zip file
 	if [ "$download_button" = true ] && [ ! -e "$topdir/_site/$url/${gallery_url[i]}.zip" ]
 	then
