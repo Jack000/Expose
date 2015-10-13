@@ -141,6 +141,12 @@ template () {
 
 scratchdir=$(mktemp -d 2>/dev/null || mktemp -d -t 'exposetempdir')
 scratchdir=$(winpath "$scratchdir")
+
+if [ -z "$scratchdir" ]
+then
+	echo "Could not create scratch directory" >&2; exit 1;
+fi
+
 chmod -R 740 "$scratchdir"
 
 output_url=""
@@ -917,7 +923,7 @@ do
 		cd "$topdir"
 	fi
 	
-	rm -rf "$scratchdir"/*
+	rm -rf "${scratchdir:?}/"*
 done
 
 # copy resources to _site
