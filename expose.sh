@@ -917,7 +917,7 @@ do
 		cd "$topdir"
 	fi
 	
-	rm -rf "$scratchdir"/*
+	rm -rf "${scratchdir:?}/"*
 done
 
 # copy resources to _site
