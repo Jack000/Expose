@@ -699,7 +699,7 @@ firsthtml=$(template "$firsthtml" basepath "$basepath")
 firsthtml=$(template "$firsthtml" disqus_identifier "$firstpath")
 firsthtml=$(template "$firsthtml" resourcepath "$firstpath/")
 firsthtml=$(echo "$firsthtml" | sed "s/{{[^{}]*:\([^}]*\)}}/\1/g")
-firsthtml=$(echo "$firsthtml" | sed "s/{{[^}]*}}//g")
+firsthtml=$(echo "$firsthtml" | sed "s/{{[^}]*}}//g; s/<ul><\/ul>//g")
 echo "$firsthtml" > "$topdir/_site"/index.html
 
 printf "\nStarting encode\n"
