@@ -135,8 +135,17 @@ winpath () {
 # $1: template, $2: {{ variable name }}, $3: replacement string
 template () {
 	key=$(echo "$2" | tr -d '[:space:]')
-	value=$(echo $3 | sed -e 's/\\/\\\\/g' -e 's/\//\\\//g' -e 's/&/\\\&/g') # escape slashes
-	echo "$1" | sed "s/{{$key}}/$value/g; s/{{$key:[^}]*}}/$value/g"
+	
+	value=""
+	while read -r line
+	do
+		value+=$(echo "$line" | sed -e 's/\\/\\\\/g' -e 's/\//\\\//g' -e 's/&/\\\&/g') # escape slashes
+	done <<< "$3"
+	
+	while read -r line
+	do
+		echo "$line" | sed "s/{{$key}}/${value}/g; s/{{$key:[^}]*}}/${value}/g"
+	done <<< "$1"
 }
 
 scratchdir=$(mktemp -d 2>/dev/null || mktemp -d -t 'exposetempdir')
@@ -429,7 +438,7 @@ do
 		continue
 	fi
 	
-	allposts=""
+	html="$template"
 	
 	gallery_metadata=""
 	if [ -e "${paths[i]}/$metadata_file" ]
@@ -550,14 +559,14 @@ do
 		
 		post=$(template "$post" type "$type")
 
-		allposts+="$post"
+		html=$(template "$html" content "$post {{content}}")
+		html=$(echo "$html" | sed -e $'s/{{content}}/\\\n{{content}}/g' ) # add a newline outside templating function to break up long lines
 		
 		((gallery_index++))
 		((j++))
 	done
 	
 	#write html file
-	html=$(template "$template" content "$allposts")
 	html=$(template "$html" sitetitle "$site_title")
 	html=$(template "$html" gallerytitle "${nav_name[i]}")
 	
