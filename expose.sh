@@ -331,31 +331,39 @@ do
 		
 		if [ "$format" != "jpeg" ] && [ "$format" != "png" ] && [ "$format" != "gif" ] && [ "$format" != "sequence" ]
 		then
-			# could be a video file
-			if [ "$video_enabled" = false ]
-			then
-				continue
-			fi
-			
-			# first check file headers for video, then use ffmpeg directly
+		
 			extension=$(echo "${filename##*.}" | tr '[:upper:]' '[:lower:]')
-
-			found=false
-			for e in "${video_extensions[@]}"
-			do
-				if [ "$e" = "$extension" ]
-				then
-					found=true
-					break
-				fi
-			done
 			
-			if [ "$found" = false ]
+			# identify command may not be reliable, trust that extensions aren't lying if available
+			if [ "$extension" = "jpg" ] || [ "$extension" = "png" ] || [ "$extension" = "gif" ]
 			then
-				file -ib "$filename" | grep video >/dev/null || continue # not image or video or sequence, ignore
+				format="$extension"
+			else
+				# could be a video file
+				if [ "$video_enabled" = false ]
+				then
+					continue
+				fi
+				
+				# first check file headers for video, then use ffmpeg directly
+
+				found=false
+				for e in "${video_extensions[@]}"
+				do
+					if [ "$e" = "$extension" ]
+					then
+						found=true
+						break
+					fi
+				done
+				
+				if [ "$found" = false ]
+				then
+					file -ib "$filename" | grep video >/dev/null || continue # not image or video or sequence, ignore
+				fi
+				
+				format="video"
 			fi
-			
-			format="video"
 		fi
 				
 		if [ "$format" = "video" ]
@@ -901,7 +909,7 @@ do
 		# only downscale original image
 		if [ "$width" -ge "$res" ]
 		then
-			convert -auto-orient -size "$res"x"$res" "$image" -resize "$res"x"$res" -quality "$jpeg_quality" +profile '*' $options "$topdir/_site/$url/$res.jpg"
+			convert -size "$res"x"$res" "$image" -resize "$res"x"$res" -quality "$jpeg_quality" +profile '*' $options "$topdir/_site/$url/$res.jpg"
 		fi
 	done
 	
