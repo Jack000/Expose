@@ -381,7 +381,7 @@ do
 				
 		if [ "$extract_colors" = true ]
 		then
-			palette=$(convert "$image" -depth 4 +dither -colors 7 -unique-colors txt:- | tail -n +2 | awk 'BEGIN{RS=" "} /#/ {print}' 2>&1)
+			palette=$(convert "$image" -resize 200x200 -depth 4 +dither -colors 7 -unique-colors txt:- | tail -n +2 | awk 'BEGIN{RS=" "} /#/ {print}' 2>&1)
 		else
 			palette=""
 			for p in "${default_palette[@]}"
