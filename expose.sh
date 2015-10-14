@@ -892,7 +892,7 @@ do
 		# only downscale original image
 		if [ "$width" -ge "$res" ]
 		then
-			convert -size "$res"x"$res" "$image" -resize "$res"x"$res" -quality "$jpeg_quality" +profile '*' $options "$topdir/_site/$url/$res.jpg"
+			convert -auto-orient -size "$res"x"$res" "$image" -resize "$res"x"$res" -quality "$jpeg_quality" +profile '*' $options "$topdir/_site/$url/$res.jpg"
 		fi
 	done
 	
