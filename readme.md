@@ -193,6 +193,9 @@ If the two built-in themes aren't your thing, you can create a new theme. There 
 **template.html** contains the global html for your page. It has access to the following built-in variables:
 
 - {{ basepath }} - a relative path to the top level directory of the generated site, with trailing slash
+- {{ resourcepath }} - a relative path to the gallery resource directory. This will be mostly empty (since the index.html file is in the resource directory), except for the top level index.html file, which necessarily draws resources from a subdirectory
+- {{ resolution }} - a list of horizontal resolutions, as specified in the config. This is a single string with space-delimited values
+- {{ videoformats }} - a list of video codecs that are generated, as defined in the config
 - {{ content }} - where the text/images will go
 - {{ sitetitle }} - a global title for your site, as specified in the config
 - {{ gallerytitle }} - the title of the current gallery. This is just taken from the folder name
@@ -202,7 +205,9 @@ If the two built-in themes aren't your thing, you can create a new theme. There 
 
 **post-template.html** contains the html fragment for each individual image. It has access to the following built-in variables:
 
-- {{ imageurl }} - url of the *directory* which contains the image/video resources, relative to the current html file
+- {{ imageurl }} - url of the *directory* which contains the image/video resources, relative to the current html file.
+	- For images, this folder will contain all the scaled versions of the images, where the file name is simply the width of the image - eg. 650.jpg
+	- For videos, this folder will contain scaled videos for each resolution *and* video codec. The name convention here is size-codec.extension - eg. 640-h264.mp4
 - {{ imagewidth }} - width of the source image
 - {{ imageheight }} - height of the source image
 - {{ type }} - the type of media to display, this is a string that can either be "image" or "video"
