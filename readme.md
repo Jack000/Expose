@@ -190,17 +190,17 @@ By default the video is encoded at 24fps.
 
 If the two built-in themes aren't your thing, you can create a new theme. There are only two template files in a theme:
 
-*template.html* contains the global html for your page. It has access to the following built-in variables:
+**template.html** contains the global html for your page. It has access to the following built-in variables:
 
 - {{ basepath }} - a relative path to the top level directory of the generated site, with trailing slash
 - {{ content }} - where the text/images will go
 - {{ sitetitle }} - a global title for your site, as specified in the config
 - {{ gallerytitle }} - the title of the current gallery. This is just taken from the folder name
-- {{ navigation }} - a nested html menu generated from the folder structure. Does not include wrapping <ul> so you can use your own id
+- {{ navigation }} - a nested html menu generated from the folder structure. Does not include wrapping ul tag so you can use your own id
 - {{ disqus_shortname }} - your disqus shortname, as specified in the config
 - {{ disqus_identifier }} - the disqus_identifier, which is just the relative path of the current gallery
 
-*post-template.html* contains the html fragment for each individual image. It has access to the following built-in variables:
+**post-template.html** contains the html fragment for each individual image. It has access to the following built-in variables:
 
 - {{ imageurl }} - url of the *directory* which contains the image/video resources, relative to the current html file
 - {{ imagewidth }} - width of the source image
