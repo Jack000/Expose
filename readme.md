@@ -208,6 +208,7 @@ If the two built-in themes aren't your thing, you can create a new theme. There 
 - {{ imageurl }} - url of the *directory* which contains the image/video resources, relative to the current html file.
 	- For images, this folder will contain all the scaled versions of the images, where the file name is simply the width of the image - eg. 650.jpg
 	- For videos, this folder will contain scaled videos for each resolution *and* video codec. The name convention here is size-codec.extension - eg. 640-h264.mp4
+	- For videos, this folder will additionally contain scaled images in the same nomenclature (eg. 640.jpg) to be used as posters prior to video load
 - {{ imagewidth }} - width of the source image
 - {{ imageheight }} - height of the source image
 - {{ type }} - the type of media to display, this is a string that can either be "image" or "video"
