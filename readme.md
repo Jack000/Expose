@@ -186,3 +186,47 @@ Timelapse and stop-motion are a great way to add motion to a scene. If your fold
 
 By default the video is encoded at 24fps.
 
+### Templating
+
+If the two built-in themes aren't your thing, you can create a new theme. There are only two template files in a theme:
+
+*template.html* contains the global html for your page. It has access to the following built-in variables:
+
+- {{ basepath }} - a relative path to the top level directory of the generated site, with trailing slash
+- {{ content }} - where the text/images will go
+- {{ sitetitle }} - a global title for your site, as specified in the config
+- {{ gallerytitle }} - the title of the current gallery. This is just taken from the folder name
+- {{ navigation }} - a nested html menu generated from the folder structure. Does not include wrapping <ul> so you can use your own id
+- {{ disqus_shortname }} - your disqus shortname, as specified in the config
+- {{ disqus_identifier }} - the disqus_identifier, which is just the relative path of the current gallery
+
+*post-template.html* contains the html fragment for each individual image. It has access to the following built-in variables:
+
+- {{ imageurl }} - url of the *directory* which contains the image/video resources, relative to the current html file
+- {{ imagewidth }} - width of the source image
+- {{ imageheight }} - height of the source image
+- {{ type }} - the type of media to display, this is a string that can either be "image" or "video"
+- {{ textcolor }} - color of the text, either extracted from the source image or specified in config
+- {{ backgroundcolor }} - background color, either extracted from the source image or specified in config
+
+in addition to these, any variables specified in the YAML metadata of the post will also be available to the post template, eg:
+
+	---
+	mycustomvar: foo
+	---
+
+this will cause {{ mycustomvar }} to be replaced by "foo", in this particular post
+
+#### Additional notes:
+
+Specify default values, in case of unset template variables in the form {{foo:bar}} eg:
+	
+	{{width:50}}
+
+will set width to 50 if no specific value has been assigned to it by the time page generation has finished.
+
+Any unused {{ xxx }} variables that did not have defaults are removed from the generated page.
+
+Any non-template files (css, images, javascript) in the theme directory are simply copied into the _site directory.
+
+To avoid additional dependencies, the YAML parser and template engine is simply a sed regex. This means that YAML metadata must take the form of simple key:value pairs, and more complex liquid template syntax are not available.
