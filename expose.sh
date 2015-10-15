@@ -394,11 +394,17 @@ do
 
 		maxwidth=0
 		maxheight=0
+		count=0
 		
 		for res in "${resolution[@]}"
 		do
+			((count++))
 			# store max values for later use
 			if [ "$width" -ge "$res" ] && [ "$res" -gt "$maxwidth" ]
+			then
+				maxwidth="$res"
+				maxheight=$((res*height/width))
+			elif [ "$maxwidth" -eq 0 ] && [ "$count" = "${#resolution[@]}" ]
 			then
 				maxwidth="$res"
 				maxheight=$((res*height/width))
@@ -902,12 +908,15 @@ do
 		options="" # don't apply image options to a video
 	fi
 	
+	count=0
+	
 	for res in "${resolution[@]}"
 	do
+		((count++))
 		[ -e "$topdir/_site/$url/$res.jpg" ] && continue
 		
 		# only downscale original image
-		if [ "$width" -ge "$res" ]
+		if [ "$width" -ge "$res" ] || [ "$count" -eq "${#resolution[@]}" ]
 		then
 			convert -size "$res"x"$res" "$image" -resize "$res"x"$res" -quality "$jpeg_quality" +profile '*' $options "$topdir/_site/$url/$res.jpg"
 		fi

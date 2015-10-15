@@ -264,13 +264,12 @@ function scrollcheck(){
 		$('.slide .image').removeClass('active');
 		$('.slide video').removeClass('active');
 		
-		var set_res = current_resolution;
-		
 		// load next N slides as per config
 		// remove videos from dom as we scroll past
 		$('.slide').each(function(i){
 			var img = $(this).find('img.image');
 			
+			var set_res = current_resolution;
 			if(parseInt($(this).data('imagewidth')) < current_resolution){
 				set_res = parseInt($(this).data('imagewidth'));
 			}
