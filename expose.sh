@@ -813,7 +813,7 @@ do
 			
 			[ -s "$output_url" ] && continue
 			
-			ffmpeg -loglevel error -i "$filepath" -c:v libx264 -threads "$ffmpeg_threads" $options -vf scale="${resolution[0]}:trunc(ow/a/2)*2$filters" -profile:v high -pix_fmt yuv420p -preset ultrafast -crf 26 "$audio" -movflags +faststart -f mp4 "$output_url"
+			ffmpeg -loglevel error -i "$filepath" -c:v libx264 -threads "$ffmpeg_threads" $options -vf scale="${resolution[0]}:trunc(ow/a/2)*2$filters" -profile:v high -pix_fmt yuv420p -preset ultrafast -crf 26 $audio -movflags +faststart -f mp4 "$output_url"
 		else
 			for vformat in "${video_formats[@]}"
 			do
@@ -854,7 +854,7 @@ do
 								ffmpeg -loglevel error -y -i "$filepath" -c:v libx264 -threads "$ffmpeg_threads" $options $filtersfull -profile:v high -pix_fmt yuv420p -preset "$h264_encodespeed" -b:v "$mbit"M -maxrate "$mbitmax"M -bufsize "$mbitmax"M -pass 1 -an -f mp4 "$nullpath" || continue 2 # if we can't encode the video, skip this file entirely. Possibly not a video file
 							fi
 							
-							ffmpeg -loglevel error -i "$filepath" -c:v libx264 -threads "$ffmpeg_threads" $options -vf scale="$res:trunc(ow/a/2)*2$filters"  -profile:v high -pix_fmt yuv420p -preset "$h264_encodespeed" -b:v "$mbit"M -maxrate "$mbitmax"M -bufsize "$mbitmax"M -pass 2 "$audio" -movflags +faststart -f mp4 "$output_url"
+							ffmpeg -loglevel error -i "$filepath" -c:v libx264 -threads "$ffmpeg_threads" $options -vf scale="$res:trunc(ow/a/2)*2$filters"  -profile:v high -pix_fmt yuv420p -preset "$h264_encodespeed" -b:v "$mbit"M -maxrate "$mbitmax"M -bufsize "$mbitmax"M -pass 2 $audio -movflags +faststart -f mp4 "$output_url"
 						
 						# VP9 2 pass encode
 						elif [ "$vformat" = "vp9" ]
@@ -865,7 +865,7 @@ do
 								ffmpeg -loglevel error -y -i "$filepath" -c:v libvpx-vp9 -threads "$ffmpeg_threads" $options $filtersfull -pix_fmt yuv420p -speed 4 -b:v "$mbit"M -maxrate "$mbitmax"M -bufsize "$mbitmax"M -pass 1 -an -f webm "$nullpath" || continue 2 # if we can't encode the video, skip this file entirely. Possibly not a video file
 							fi
 							
-							ffmpeg -loglevel error -i "$filepath" -c:v libvpx-vp9 -threads "$ffmpeg_threads" $options -vf scale="$res:trunc(ow/a/2)*2$filters" -pix_fmt yuv420p -speed "$vp9_encodespeed" -b:v "$mbit"M -maxrate "$mbitmax"M -bufsize "$mbitmax"M -pass 2 "$audio" -f webm "$output_url"
+							ffmpeg -loglevel error -i "$filepath" -c:v libvpx-vp9 -threads "$ffmpeg_threads" $options -vf scale="$res:trunc(ow/a/2)*2$filters" -pix_fmt yuv420p -speed "$vp9_encodespeed" -b:v "$mbit"M -maxrate "$mbitmax"M -bufsize "$mbitmax"M -pass 2 $audio -f webm "$output_url"
 						
 						# VP8 2 pass encode
 						elif [ "$vformat" = "vp8" ]
@@ -876,12 +876,12 @@ do
 								ffmpeg -loglevel error -y -i "$filepath" -c:v libvpx -threads "$ffmpeg_threads" $options $filtersfull -pix_fmt yuv420p -b:v "$mbit"M -maxrate "$mbitmax"M -bufsize "$mbitmax"M -pass 1 -an -f webm "$nullpath" || continue 2 # if we can't encode the video, skip this file entirely. Possibly not a video file
 							fi
 							
-							ffmpeg -loglevel error -i "$filepath" -c:v libvpx -threads "$ffmpeg_threads" $options -vf scale="$res:trunc(ow/a/2)*2$filters" -pix_fmt yuv420p -b:v "$mbit"M -maxrate "$mbitmax"M -bufsize "$mbitmax"M -pass 2 "$audio" -f webm "$output_url"
+							ffmpeg -loglevel error -i "$filepath" -c:v libvpx -threads "$ffmpeg_threads" $options -vf scale="$res:trunc(ow/a/2)*2$filters" -pix_fmt yuv420p -b:v "$mbit"M -maxrate "$mbitmax"M -bufsize "$mbitmax"M -pass 2 $audio -f webm "$output_url"
 						
 						# Theora 1 pass encode
 						elif [ "$vformat" = "ogv" ]
 						then
-							ffmpeg -loglevel error -i "$filepath" -c:v libtheora -threads "$ffmpeg_threads" $options -vf scale="$res:trunc(ow/a/2)*2$filters" -pix_fmt yuv420p -b:v "$mbit"M -maxrate "$mbitmax"M -bufsize "$mbitmax"M "$audio" "$output_url"
+							ffmpeg -loglevel error -i "$filepath" -c:v libtheora -threads "$ffmpeg_threads" $options -vf scale="$res:trunc(ow/a/2)*2$filters" -pix_fmt yuv420p -b:v "$mbit"M -maxrate "$mbitmax"M -bufsize "$mbitmax"M $audio "$output_url"
 						fi
 					fi
 				done
