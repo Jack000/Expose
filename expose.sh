@@ -2,16 +2,16 @@
 
 # configuration
 
-site_title="My Awesome Photos"
+site_title=${site_title:-"My Awesome Photos"}
 
-theme_dir="theme1"
+theme_dir=${theme_dir:-"theme1"}
 
 # widths to scale images to (heights are calculated from source images)
 # you might want to change this for example, if your images aren't full screen on the browser side
 resolution=(3840 2560 1920 1280 1024 640)
 
 # jpeg compression quality for static photos
-jpeg_quality=92
+jpeg_quality=${jpeg_quality:-92}
 
 # formats to encode to, list in order of preference. Available formats are vp9, vp8, h264, ogv
 video_formats=(h264 vp8)
@@ -24,30 +24,30 @@ bitrate=(40 24 12 7 4 2)
 
 bitrate_maxratio=2 # a multiple of target bitrate to get max bitrate for VBR encoding. must be > 1. Higher ratio gives better quality on scenes with lots of movement. Ratio=1 reduces to CBR encoding
 
-disable_audio=true
+disable_audio=${disable_audio:-true}
 
 # extract a representative palette for each photo/video and use those colors for background/text/accent etc
-extract_colors=true
+extract_colors=${extract_colors:-true}
 
-backgroundcolor="#000000" # slide background, visible only before image has loaded
-textcolor="#ffffff" # default text color
+backgroundcolor=${backgroundcolor:-"#000000"} # slide background, visible only before image has loaded
+textcolor=${textcolor:-"#ffffff"} # default text color
 
 # palette of 7 colors, background to foreground, to be used if color extraction is disabled
 default_palette=("#000000" "#222222" "#444444" "#666666" "#999999" "#cccccc" "#ffffff")
 
-override_textcolor=true # use given text color instead of extracted palette on body text.
+override_textcolor=${override_textcolor:-true} # use given text color instead of extracted palette on body text.
 
 # display a toggle button to show/hide the text
-text_toggle=true
+text_toggle=${text_toggle:-true}
 
-social_button=true
+social_button=${social_button:-true}
 
 # option to put the full image/video in a zip file with a license readme.txt
-download_button=false
-download_readme="All rights reserved"
+download_button=${download_button:-false}
+download_readme=${dowmload_readme:-"All rights reserved"}
 
 # disqus forum name. Leave blank to disable comments
-disqus_shortname=""
+disqus_shortname=${disqus_shortname:-""}
 
 # arbitrary list of extensions we'll assume are video files.
 video_extensions=(3g2 3gp 3gp2 asf avi dvr-ms exr ffindex ffpreset flv gxf h261 h263 h264 ifv m2t m2ts mts m4v mkv mod mov mp4 mpg mxf tod vob webm wmv y4m)
@@ -56,10 +56,10 @@ sequence_keyword="imagesequence" # if a directory name contains this keyword, tr
 sequence_framerate=24 # sequence framerate
 
 # specific codec options here
-h264_encodespeed="veryslow" # h264 encode speed, slower produces better compression results. Options are ultrafast,superfast, veryfast, faster, fast, medium, slow, slower, veryslow
-vp9_encodespeed=1 # VP9 encode speed, 0 is best and slowest, 4 for fastest. VP9 is very slow to encode in general. Note that 0 is dramatically slower than 1 with marginal quality improvement
+h264_encodespeed=${h264_encodespeed:-"veryslow"} # h264 encode speed, slower produces better compression results. Options are ultrafast,superfast, veryfast, faster, fast, medium, slow, slower, veryslow
+vp9_encodespeed=${vp9_encodespeed:-1} # VP9 encode speed, 0 is best and slowest, 4 for fastest. VP9 is very slow to encode in general. Note that 0 is dramatically slower than 1 with marginal quality improvement
 
-ffmpeg_threads=0 # the -threads option for ffmpeg encode (0=auto). This could be useful, for example if you need to throttle CPU load on a server that's doing other things.
+ffmpeg_threads=${ffmpeg_threads:-0} # the -threads option for ffmpeg encode (0=auto). This could be useful, for example if you need to throttle CPU load on a server that's doing other things.
 
 # script starts here
 
