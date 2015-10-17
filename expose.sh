@@ -44,7 +44,7 @@ social_button=${social_button:-true}
 
 # option to put the full image/video in a zip file with a license readme.txt
 download_button=${download_button:-false}
-download_readme=${dowmload_readme:-"All rights reserved"}
+download_readme=${download_readme:-"All rights reserved"}
 
 # disqus forum name. Leave blank to disable comments
 disqus_shortname=${disqus_shortname:-""}
