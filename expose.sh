@@ -14,7 +14,7 @@ resolution=(3840 2560 1920 1280 1024 640)
 jpeg_quality=${jpeg_quality:-92}
 
 # jpeg image autorotation
-autorotate=${autorotate:-false}
+autorotate=${autorotate:-true}
 
 # formats to encode to, list in order of preference. Available formats are vp9, vp8, h264, ogv
 video_formats=(h264 vp8)
@@ -399,8 +399,9 @@ do
 				palette+="$p"$'\n'
 			done
 		fi
-		# If orientation = 1, then the image is not rotated
-		if [ "$autorotate" = true -a $(identify -format "%[EXIF:Orientation]" "$image") -ne 1 ]
+		# If autorotate is enabled, and the EXIF orientation exists, and the orientation is between 5 and 8 (vertical codes)
+		orientation=$(identify -format "%[EXIF:Orientation]" "$image")
+		if [ "$autorotate" = true ] && [ -n $orienation ] && [ $orientation -ge 5 ] && [ $orientation -le 8 ]
 		then
 			# If the image is rotated, swap the height and width
 			width=$(identify -format "%h" "$image")
