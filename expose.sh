@@ -13,6 +13,9 @@ resolution=(3840 2560 1920 1280 1024 640)
 # jpeg compression quality for static photos
 jpeg_quality=${jpeg_quality:-92}
 
+# jpeg image autorotation
+autorotate=${autorotate:-false}
+
 # formats to encode to, list in order of preference. Available formats are vp9, vp8, h264, ogv
 video_formats=(h264 vp8)
 
@@ -95,6 +98,13 @@ video_enabled=false
 if command -v ffmpeg >/dev/null 2>&1 && command -v ffprobe >/dev/null 2>&1
 then
 	video_enabled=true
+fi
+
+if [ "$autorotate" = true ]
+then
+	autorotateoption=" -auto-orient "
+else
+	autorotateoption=""
 fi
 
 # directory structure will form nav structure
@@ -389,8 +399,16 @@ do
 				palette+="$p"$'\n'
 			done
 		fi
-		width=$(identify -format "%w" "$image")
-		height=$(identify -format "%h" "$image")
+		# If orientation = 1, then the image is not rotated
+		if [ "$autorotate" = true -a $(identify -format "%[EXIF:Orientation]" "$image") -ne 1 ]
+		then
+			# If the image is rotated, swap the height and width
+			width=$(identify -format "%h" "$image")
+			height=$(identify -format "%w" "$image")
+		else
+			width=$(identify -format "%w" "$image")
+			height=$(identify -format "%h" "$image")
+		fi
 
 		maxwidth=0
 		maxheight=0
@@ -918,7 +936,7 @@ do
 		# only downscale original image
 		if [ "$width" -ge "$res" ] || [ "$count" -eq "${#resolution[@]}" ]
 		then
-			convert -size "$res"x"$res" "$image" -resize "$res"x"$res" -quality "$jpeg_quality" +profile '*' $options "$topdir/_site/$url/$res.jpg"
+			convert $autorotateoption -size "$res"x"$res" "$image" -resize "$res"x"$res" -quality "$jpeg_quality" +profile '*' $options "$topdir/_site/$url/$res.jpg"
 		fi
 	done
 	
