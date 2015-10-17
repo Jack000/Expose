@@ -401,7 +401,7 @@ do
 		fi
 		# If autorotate is enabled, and the EXIF orientation exists, and the orientation is between 5 and 8 (vertical codes)
 		orientation=$(identify -format "%[EXIF:Orientation]" "$image")
-		if [ "$autorotate" = true ] && [ -n $orienation ] && [ $orientation -ge 5 ] && [ $orientation -le 8 ]
+		if [ "$autorotate" = true ] && [ -n "$orienation" ] && [ $orientation -ge 5 ] && [ $orientation -le 8 ]
 		then
 			# If the image is rotated, swap the height and width
 			width=$(identify -format "%h" "$image")
