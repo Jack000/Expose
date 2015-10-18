@@ -217,22 +217,22 @@ do
 	fi
 		
 	dircount=$(find "$node" -maxdepth 1 -type d ! -path "$node" ! -path "$node*/_*" | wc -l)
-	dircount_sequence=$(find "$node" -maxdepth 1 -type d ! -path "$node" ! -path "$node/_site" ! -path "$node/*$sequence_keyword*" | wc -l)
+	dircount_sequence=$(find "$node" -maxdepth 1 -type d ! -path "$node" ! -path "$node*/_*" ! -path "$node/*$sequence_keyword*" | wc -l)
 	
 	if [ "$dircount" -gt 0 ]
 	then
 		if [ -z "$sequence_keyword" ] || [ "$dircount_sequence" -gt 0 ]
 		then
-			node_type=0
+			node_type=0 # dir contains other dirs, it is not a leaf
 		else
-			node_type=1
+			node_type=1 # dir contains other dirs, but they are imagesequence dirs which are not galleries
 		fi
 	else
 		if [ ! -z "$sequence_keyword" ] && [ $(echo "$node_name" | grep "$sequence_keyword" | wc -l) -gt 0 ]
 		then
-			continue
+			continue # dir is an imagesequence dir, it is in effect a video. Do not add to the path list
 		else
-			node_type=1
+			node_type=1 # does not contain other dirs, and is not image sequence. It is a leaf
 		fi
 	fi
 	
