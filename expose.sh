@@ -788,7 +788,7 @@ do
 				tempname=$(printf "%04d" "$j")
 				cp "$seqfile" "$scratchdir/$tempname"
 				((j++))
-			done < <(find "$filepath" -maxdepth 1 ! -path "$filepath" | sort)
+			done < <(find "$filepath" -maxdepth 1 ! -path "$filepath" -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.gif" -o -iname "*.png" | sort)
 			sequencevideo="$scratchdir/sequencevideo.mp4"
 			
 			maxres=$(printf '%s\n' "${resolution[@]}" | sort -n | tail -n 1)
