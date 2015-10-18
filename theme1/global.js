@@ -19,18 +19,7 @@ var video_formats={
 	ogv: { extension: "ogv", type: "video/ogg"}
 };
 
-$(document).ready(function(){
-
-	// set slide heights to prevent reflow
-	var mainwidth = $('#main').width();
-	$('.slide').each(function(){
-		$(this).css('padding-top', (100*$(this).data('imageheight')/$(this).data('imagewidth')) + '%');
-	});
-	
-	resourcepath = $('body').data('respath');
-	
-	// detect resolution
-	var saved_width = $.cookie('resolution');
+function drawtext(){
 	var screen_width = $(window).width();
 	
 	// set font size based on actual resolution, normalized at 14px/22px for 720
@@ -50,15 +39,35 @@ $(document).ready(function(){
 	
 	// polygon boundary feature
 	$('.slide').each(function(){
-		
 		var polygon = $(this).data('polygon');
 		
 		if(polygon && $.isArray(polygon) && polygon.length >= 3){
-
-			var now = _now();
 			fillpolygon($(this).find('.content').eq(0),polygon);
 		}
 	});
+}
+
+function redrawtext(){
+	$('.slide .polygon').remove();
+	$('.slide .content').show();
+	
+	drawtext();
+}
+
+$(document).ready(function(){
+
+	// set slide heights to prevent reflow
+	$('.slide').each(function(){
+		$(this).css('padding-top', (100*$(this).data('imageheight')/$(this).data('imagewidth')) + '%');
+	});
+	
+	resourcepath = $('body').data('respath');
+	
+	// detect resolution
+	var saved_width = $.cookie('resolution');
+	var screen_width = $(window).width();
+	
+	drawtext();
 	
 	// build resolution selector
 	$.each(String($('body').data('resolution')).split(" "),function(i, v){
@@ -397,6 +406,9 @@ throttle = function(func, wait, options) {
 var throttled = throttle(scrollcheck, 700);
 $(window).scroll(throttled);
 
+var redrawtext_throttled = throttle(redrawtext, 1000);
+$(window).resize(redrawtext_throttled);
+
 function findoverlap(elem)
 {
 	var winHeight = $(window).height();
@@ -414,7 +426,7 @@ function findoverlap(elem)
     return 0;
 }
 
-// given content element and a polygon definition, fill the polygon with content text and replace original content
+// given content element and a polygon definition, fill the polygon with content text and hide original content
 function fillpolygon(content, polygon){
 	if(!polygon || polygon.length < 3){
 		return false;
