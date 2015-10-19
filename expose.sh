@@ -16,8 +16,8 @@ jpeg_quality=${jpeg_quality:-92}
 # jpeg image autorotation
 autorotate=${autorotate:-true}
 
-# formats to encode to, list in order of preference. Available formats are vp9, vp8, h264, ogv
-video_formats=(h264 vp8)
+# formats to encode to, list in order of preference. Available formats are vp9, vp8, h264, h265, ogv
+video_formats=(h265 vp9 h264 vp8)
 
 # video quality - target bitrates in MBit/s matched to each resolution
 # feel free to ignore this if you don't have any videos.
@@ -53,7 +53,7 @@ download_readme=${download_readme:-"All rights reserved"}
 disqus_shortname=${disqus_shortname:-""}
 
 # arbitrary list of extensions we'll assume are video files.
-video_extensions=(3g2 3gp 3gp2 asf avi dvr-ms exr ffindex ffpreset flv gxf h261 h263 h264 ifv m2t m2ts mts m4v mkv mod mov mp4 mpg mxf tod vob webm wmv y4m)
+video_extensions=(3g2 3gp 3gp2 asf avi dvr-ms exr ffindex ffpreset flv gxf h261 h263 h264 h265 ifv m2t m2ts mts m4v mkv mod mov mp4 mpg mxf tod vob webm wmv y4m)
 
 sequence_keyword="imagesequence" # if a directory name contains this keyword, treat it as an image sequence and compile it into a video
 sequence_framerate=24 # sequence framerate
@@ -864,8 +864,19 @@ do
 						
 						echo -e "\tEncoding $vformat $res x $scaled_height"
 						
+						# h265 2 pass encode
+						if [ "$vformat" = "h265" ]
+						then
+							if [ "$firstpass" = false ]
+							then
+								firstpass=true # only need to do first pass once
+								ffmpeg -loglevel error -y -i "$filepath" -c:v libx265 -threads "$ffmpeg_threads" $options $filtersfull -pix_fmt yuv420p -preset "$h264_encodespeed" -b:v "$mbit"M -maxrate "$mbitmax"M -bufsize "$mbitmax"M -pass 1 -an -f mp4 "$nullpath" || continue 2 # if we can't encode the video, skip this file entirely. Possibly not a video file
+							fi
+							
+							ffmpeg -loglevel error -i "$filepath" -c:v libx265 -threads "$ffmpeg_threads" $options -vf scale="$res:trunc(ow/a/2)*2$filters" -pix_fmt yuv420p -preset "$h264_encodespeed" -b:v "$mbit"M -maxrate "$mbitmax"M -bufsize "$mbitmax"M -pass 2 "$audio" -movflags +faststart -f mp4 "$output_url"
+						
 						# h264 2 pass encode
-						if [ "$vformat" = "h264" ]
+						elif [ "$vformat" = "h264" ]
 						then
 							if [ "$firstpass" = false ]
 							then
