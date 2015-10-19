@@ -336,7 +336,7 @@ do
 		if [ -d "$file" ] && [ $(echo "$filename" | grep "$sequence_keyword" | wc -l) -gt 0 ]
 		then
 			format="sequence"
-			image=$(find "$file" -maxdepth 1 ! -path "$file" | sort | head -n 1)
+			image=$(find "$file" -maxdepth 1 ! -path "$file" -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.gif" -o -iname "*.png" | sort | head -n 1)
 		else
 			format=$(identify -format "%m" "$file" 2>/dev/null | tr '[:upper:]' '[:lower:]')
 		fi
