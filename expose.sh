@@ -381,7 +381,7 @@ do
 			# generate image from video file first
 			temppath=$(winpath "$scratchdir/temp.jpg")
 			
-			ffmpeg -loglevel error -y -i "$filepath" -vf "select=gte(n\,1)" -vframes 1 -qscale:v 2 "$temppath" < /dev/null
+			ffmpeg -loglevel error -nostdin -y -i "$filepath" -vf "select=gte(n\,1)" -vframes 1 -qscale:v 2 "$temppath" < /dev/null
 			image="$scratchdir/temp.jpg"
 						
 		elif [ "$format" != "sequence" ]
@@ -793,7 +793,7 @@ do
 			
 			maxres=$(printf '%s\n' "${resolution[@]}" | sort -n | tail -n 1)
 			
-			ffmpeg -loglevel error -f image2 -y -i "$scratchdir/%04d" -c:v libx264 -threads "$ffmpeg_threads" -vf scale="$maxres:trunc(ow/a/2)*2" -profile:v high -pix_fmt yuv420p -preset "$h264_encodespeed" -crf 15 -r "$sequence_framerate" -f mp4 "$sequencevideo"
+			ffmpeg -loglevel error -nostdin -f image2 -y -i "$scratchdir/%04d" -c:v libx264 -threads "$ffmpeg_threads" -vf scale="$maxres:trunc(ow/a/2)*2" -profile:v high -pix_fmt yuv420p -preset "$h264_encodespeed" -crf 15 -r "$sequence_framerate" -f mp4 "$sequencevideo"
 			
 			filepath="$sequencevideo"
 		fi
@@ -832,7 +832,7 @@ do
 			
 			[ -s "$output_url" ] && continue
 			
-			ffmpeg -loglevel error -i "$filepath" -c:v libx264 -threads "$ffmpeg_threads" $options -vf scale="${resolution[0]}:trunc(ow/a/2)*2$filters" -profile:v high -pix_fmt yuv420p -preset ultrafast -crf 26 $audio -movflags +faststart -f mp4 "$output_url"
+			ffmpeg -loglevel error -nostdin -i "$filepath" -c:v libx264 -threads "$ffmpeg_threads" $options -vf scale="${resolution[0]}:trunc(ow/a/2)*2$filters" -profile:v high -pix_fmt yuv420p -preset ultrafast -crf 26 $audio -movflags +faststart -f mp4 "$output_url"
 		else
 			for vformat in "${video_formats[@]}"
 			do
@@ -870,10 +870,10 @@ do
 							if [ "$firstpass" = false ]
 							then
 								firstpass=true # only need to do first pass once
-								ffmpeg -loglevel error -y -i "$filepath" -c:v libx265 -threads "$ffmpeg_threads" $options $filtersfull -pix_fmt yuv420p -preset "$h264_encodespeed" -b:v "$mbit"M -maxrate "$mbitmax"M -bufsize "$mbitmax"M -pass 1 -an -f mp4 "$nullpath" || continue 2 # if we can't encode the video, skip this file entirely. Possibly not a video file
+								ffmpeg -loglevel error -nostdin -y -i "$filepath" -c:v libx265 -threads "$ffmpeg_threads" $options $filtersfull -pix_fmt yuv420p -preset "$h264_encodespeed" -b:v "$mbit"M -maxrate "$mbitmax"M -bufsize "$mbitmax"M -pass 1 -an -f mp4 "$nullpath" || continue 2 # if we can't encode the video, skip this file entirely. Possibly not a video file
 							fi
 							
-							ffmpeg -loglevel error -i "$filepath" -c:v libx265 -threads "$ffmpeg_threads" $options -vf scale="$res:trunc(ow/a/2)*2$filters" -pix_fmt yuv420p -preset "$h264_encodespeed" -b:v "$mbit"M -maxrate "$mbitmax"M -bufsize "$mbitmax"M -pass 2 "$audio" -movflags +faststart -f mp4 "$output_url"
+							ffmpeg -loglevel error -nostdin -i "$filepath" -c:v libx265 -threads "$ffmpeg_threads" $options -vf scale="$res:trunc(ow/a/2)*2$filters" -pix_fmt yuv420p -preset "$h264_encodespeed" -b:v "$mbit"M -maxrate "$mbitmax"M -bufsize "$mbitmax"M -pass 2 "$audio" -movflags +faststart -f mp4 "$output_url"
 						
 						# h264 2 pass encode
 						elif [ "$vformat" = "h264" ]
@@ -881,10 +881,10 @@ do
 							if [ "$firstpass" = false ]
 							then
 								firstpass=true # only need to do first pass once
-								ffmpeg -loglevel error -y -i "$filepath" -c:v libx264 -threads "$ffmpeg_threads" $options $filtersfull -profile:v high -pix_fmt yuv420p -preset "$h264_encodespeed" -b:v "$mbit"M -maxrate "$mbitmax"M -bufsize "$mbitmax"M -pass 1 -an -f mp4 "$nullpath" || continue 2 # if we can't encode the video, skip this file entirely. Possibly not a video file
+								ffmpeg -loglevel error -nostdin -y -i "$filepath" -c:v libx264 -threads "$ffmpeg_threads" $options $filtersfull -profile:v high -pix_fmt yuv420p -preset "$h264_encodespeed" -b:v "$mbit"M -maxrate "$mbitmax"M -bufsize "$mbitmax"M -pass 1 -an -f mp4 "$nullpath" || continue 2 # if we can't encode the video, skip this file entirely. Possibly not a video file
 							fi
 							
-							ffmpeg -loglevel error -i "$filepath" -c:v libx264 -threads "$ffmpeg_threads" $options -vf scale="$res:trunc(ow/a/2)*2$filters"  -profile:v high -pix_fmt yuv420p -preset "$h264_encodespeed" -b:v "$mbit"M -maxrate "$mbitmax"M -bufsize "$mbitmax"M -pass 2 $audio -movflags +faststart -f mp4 "$output_url"
+							ffmpeg -loglevel error -nostdin -i "$filepath" -c:v libx264 -threads "$ffmpeg_threads" $options -vf scale="$res:trunc(ow/a/2)*2$filters"  -profile:v high -pix_fmt yuv420p -preset "$h264_encodespeed" -b:v "$mbit"M -maxrate "$mbitmax"M -bufsize "$mbitmax"M -pass 2 $audio -movflags +faststart -f mp4 "$output_url"
 						
 						# VP9 2 pass encode
 						elif [ "$vformat" = "vp9" ]
@@ -892,10 +892,10 @@ do
 							if [ "$firstpass" = false ]
 							then
 								firstpass=true # only need to do first pass once
-								ffmpeg -loglevel error -y -i "$filepath" -c:v libvpx-vp9 -threads "$ffmpeg_threads" $options $filtersfull -pix_fmt yuv420p -speed 4 -b:v "$mbit"M -maxrate "$mbitmax"M -bufsize "$mbitmax"M -pass 1 -an -f webm "$nullpath" || continue 2 # if we can't encode the video, skip this file entirely. Possibly not a video file
+								ffmpeg -loglevel error -nostdin -y -i "$filepath" -c:v libvpx-vp9 -threads "$ffmpeg_threads" $options $filtersfull -pix_fmt yuv420p -speed 4 -b:v "$mbit"M -maxrate "$mbitmax"M -bufsize "$mbitmax"M -pass 1 -an -f webm "$nullpath" || continue 2 # if we can't encode the video, skip this file entirely. Possibly not a video file
 							fi
 							
-							ffmpeg -loglevel error -i "$filepath" -c:v libvpx-vp9 -threads "$ffmpeg_threads" $options -vf scale="$res:trunc(ow/a/2)*2$filters" -pix_fmt yuv420p -speed "$vp9_encodespeed" -b:v "$mbit"M -maxrate "$mbitmax"M -bufsize "$mbitmax"M -pass 2 $audio -f webm "$output_url"
+							ffmpeg -loglevel error -nostdin -i "$filepath" -c:v libvpx-vp9 -threads "$ffmpeg_threads" $options -vf scale="$res:trunc(ow/a/2)*2$filters" -pix_fmt yuv420p -speed "$vp9_encodespeed" -b:v "$mbit"M -maxrate "$mbitmax"M -bufsize "$mbitmax"M -pass 2 $audio -f webm "$output_url"
 						
 						# VP8 2 pass encode
 						elif [ "$vformat" = "vp8" ]
@@ -903,15 +903,15 @@ do
 							if [ "$firstpass" = false ]
 							then
 								firstpass=true # only need to do first pass once
-								ffmpeg -loglevel error -y -i "$filepath" -c:v libvpx -threads "$ffmpeg_threads" $options $filtersfull -pix_fmt yuv420p -b:v "$mbit"M -maxrate "$mbitmax"M -bufsize "$mbitmax"M -pass 1 -an -f webm "$nullpath" || continue 2 # if we can't encode the video, skip this file entirely. Possibly not a video file
+								ffmpeg -loglevel error -nostdin -y -i "$filepath" -c:v libvpx -threads "$ffmpeg_threads" $options $filtersfull -pix_fmt yuv420p -b:v "$mbit"M -maxrate "$mbitmax"M -bufsize "$mbitmax"M -pass 1 -an -f webm "$nullpath" || continue 2 # if we can't encode the video, skip this file entirely. Possibly not a video file
 							fi
 							
-							ffmpeg -loglevel error -i "$filepath" -c:v libvpx -threads "$ffmpeg_threads" $options -vf scale="$res:trunc(ow/a/2)*2$filters" -pix_fmt yuv420p -b:v "$mbit"M -maxrate "$mbitmax"M -bufsize "$mbitmax"M -pass 2 $audio -f webm "$output_url"
+							ffmpeg -loglevel error -nostdin -i "$filepath" -c:v libvpx -threads "$ffmpeg_threads" $options -vf scale="$res:trunc(ow/a/2)*2$filters" -pix_fmt yuv420p -b:v "$mbit"M -maxrate "$mbitmax"M -bufsize "$mbitmax"M -pass 2 $audio -f webm "$output_url"
 						
 						# Theora 1 pass encode
 						elif [ "$vformat" = "ogv" ]
 						then
-							ffmpeg -loglevel error -i "$filepath" -c:v libtheora -threads "$ffmpeg_threads" $options -vf scale="$res:trunc(ow/a/2)*2$filters" -pix_fmt yuv420p -b:v "$mbit"M -maxrate "$mbitmax"M -bufsize "$mbitmax"M $audio "$output_url"
+							ffmpeg -loglevel error -nostdin -i "$filepath" -c:v libtheora -threads "$ffmpeg_threads" $options -vf scale="$res:trunc(ow/a/2)*2$filters" -pix_fmt yuv420p -b:v "$mbit"M -maxrate "$mbitmax"M -bufsize "$mbitmax"M $audio "$output_url"
 						fi
 					fi
 				done
@@ -920,7 +920,7 @@ do
 		
 		output_url=""
 		
-		ffmpeg -loglevel error -i "$filepath" $options -vf "select=gte(n\,1)$filters" -vframes 1 -qscale:v 2 "$scratchdir/temp.jpg"
+		ffmpeg -loglevel error -nostdin -i "$filepath" $options -vf "select=gte(n\,1)$filters" -vframes 1 -qscale:v 2 "$scratchdir/temp.jpg"
 		image="$scratchdir/temp.jpg"
 	fi
 	
