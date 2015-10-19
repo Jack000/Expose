@@ -98,6 +98,8 @@ video_enabled=false
 if command -v ffmpeg >/dev/null 2>&1 && command -v ffprobe >/dev/null 2>&1
 then
 	video_enabled=true
+else
+	echo "FFmpeg not found, videos will not be processed"
 fi
 
 if [ "$autorotate" = true ]
