@@ -12,7 +12,7 @@ var disqus_loaded = false;
 var current_slide = $('.slide').get(0);
 
 var video_formats={
-	h265: { extension: "mp4", type: "video/mp4"},
+	h265: { extension: "mp4", type: "video/mp4; codecs=hev1.1.2.L93.B0"},
 	h264: { extension: "mp4", type: "video/mp4"},
 	vp9: { extension: "webm", type: "video/webm; codecs=vp9"},
 	vp8: { extension: "webm", type: "video/webm; codecs=vp8"},
