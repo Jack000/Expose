@@ -192,28 +192,28 @@ If the two built-in themes aren't your thing, you can create a new theme. There 
 
 **template.html** contains the global html for your page. It has access to the following built-in variables:
 
-- {{ basepath }} - a path to the top level directory of the generated site with trailing slash, relative to the current html file
-- {{ resourcepath }} - a path to the gallery resource directory, relative to the current html file. This will be mostly empty (since the html page is in the resource directory), except for the top level index.html file, which necessarily draws resources from a subdirectory
-- {{ resolution }} - a list of horizontal resolutions, as specified in the config. This is a single string with space-delimited values
-- {{ videoformats }} - a list of video codecs that are generated, as defined in the config. This is also a single string with space-delimited values
-- {{ content }} - where the text/images will go
-- {{ sitetitle }} - a global title for your site, as specified in the config
-- {{ gallerytitle }} - the title of the current gallery. This is just taken from the folder name
-- {{ navigation }} - a nested html menu generated from the folder structure. Does not include wrapping ul tag so you can use your own id
-- {{ disqus_shortname }} - your disqus shortname, as specified in the config
-- {{ disqus_identifier }} - the disqus_identifier, which is just the relative path of the current gallery
+- {{basepath}} - a path to the top level directory of the generated site with trailing slash, relative to the current html file
+- {{resourcepath}} - a path to the gallery resource directory, relative to the current html file. This will be mostly empty (since the html page is in the resource directory), except for the top level index.html file, which necessarily draws resources from a subdirectory
+- {{resolution}} - a list of horizontal resolutions, as specified in the config. This is a single string with space-delimited values
+- {{videoformats}} - a list of video codecs that are generated, as defined in the config. This is also a single string with space-delimited values
+- {{content}} - where the text/images will go
+- {{sitetitle}} - a global title for your site, as specified in the config
+- {{gallerytitle}} - the title of the current gallery. This is just taken from the folder name
+- {{navigation}} - a nested html menu generated from the folder structure. Does not include wrapping ul tag so you can use your own id
+- {{disqus_shortname}} - your disqus shortname, as specified in the config
+- {{disqus_identifier}} - the disqus_identifier, which is just the relative path of the current gallery
 
 **post-template.html** contains the html fragment for each individual image. It has access to the following built-in variables:
 
-- {{ imageurl }} - url of the *directory* which contains the image/video resources, relative to the current html file.
+- {{imageurl}} - url of the *directory* which contains the image/video resources, relative to the current html file.
 	- For images, this folder will contain all the scaled versions of the images, where the file name is simply the width of the image - eg. 640.jpg
 	- For videos, this folder will contain scaled videos for each resolution *and* video codec. The naming convention here is size-codec.extension - eg. 640-h264.mp4
 	- For videos, this folder will additionally contain scaled images in the same nomenclature (eg. 640.jpg) to be used as posters prior to video load
-- {{ imagewidth }} - maximum width that the source image can be downscaled to
-- {{ imageheight }} - maximum height, based on aspect ratio and max width
-- {{ type }} - the type of media to display, this is a string that can either be "image" or "video"
-- {{ textcolor }} - color of the text, either extracted from the source image or specified in config
-- {{ backgroundcolor }} - background color, either extracted from the source image or specified in config
+- {{imagewidth}} - maximum width that the source image can be downscaled to
+- {{imageheight}} - maximum height, based on aspect ratio and max width
+- {{type}} - the type of media to display, this is a string that can either be "image" or "video"
+- {{textcolor}} - color of the text, either extracted from the source image or specified in config
+- {{backgroundcolor}} - background color, either extracted from the source image or specified in config
 
 in addition to these, any variables specified in the YAML metadata of the post will also be available to the post template, eg:
 
@@ -221,7 +221,7 @@ in addition to these, any variables specified in the YAML metadata of the post w
 	mycustomvar: foo
 	---
 
-this will cause {{ mycustomvar }} to be replaced by "foo", in this particular post
+this will cause {{mycustomvar}} to be replaced by "foo", in this particular post
 
 #### Additional notes:
 
@@ -231,7 +231,7 @@ Specify default values, in case of unset template variables in the form {{foo:ba
 
 will set width to 50 if no specific value has been assigned to it by the time page generation has finished.
 
-Any unused {{ xxx }} variables that did not have defaults are removed from the generated page.
+Any unused {{xxx}} variables that did not have defaults are removed from the generated page.
 
 Any non-template files (css, images, javascript) in the theme directory are simply copied into the _site directory.
 
