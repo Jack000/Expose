@@ -371,7 +371,7 @@ do
 				
 				if [ "$found" = false ]
 				then
-					file -ib "$filename" | grep video >/dev/null || continue # not image or video or sequence, ignore
+					LC_ALL=C file -ib "$filename" | grep video >/dev/null || continue # not image or video or sequence, ignore
 				fi
 				
 				format="video"
@@ -507,7 +507,7 @@ do
 		
 		metadata=""
 		content=""
-		if file "$textfile" | grep -q text
+		if LC_ALL=C file "$textfile" | grep -q text
 		then
 			# if there are two lines "---", the lines preceding the second "---" are assumed to be metadata
 			text=$(cat "$textfile" | tr -d $'\r')
