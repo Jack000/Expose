@@ -338,16 +338,10 @@ do
 			format="sequence"
 			image=$(find "$file" -maxdepth 1 ! -path "$file" -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.gif" -o -iname "*.png" | sort | head -n 1)
 		else
-			format=$(identify -format "%m" "$file" 2>/dev/null | tr '[:upper:]' '[:lower:]')
-		fi
-		
-		if [ "$format" != "jpeg" ] && [ "$format" != "png" ] && [ "$format" != "gif" ] && [ "$format" != "sequence" ]
-		then
-		
 			extension=$(echo "${filename##*.}" | tr '[:upper:]' '[:lower:]')
-			
-			# identify command may not be reliable, trust that extensions aren't lying if available
-			if [ "$extension" = "jpg" ] || [ "$extension" = "png" ] || [ "$extension" = "gif" ]
+		
+			# we'll trust that extensions aren't lying
+			if [ "$extension" = "jpg" ] || [ "$extension" = "jpeg" ] || [ "$extension" = "png" ] || [ "$extension" = "gif" ]
 			then
 				format="$extension"
 			else
@@ -357,8 +351,6 @@ do
 					continue
 				fi
 				
-				# first check file headers for video, then use ffmpeg directly
-
 				found=false
 				for e in "${video_extensions[@]}"
 				do
@@ -377,7 +369,8 @@ do
 				format="video"
 			fi
 		fi
-				
+		
+		
 		if [ "$format" = "video" ]
 		then
 			# generate image from video file first
