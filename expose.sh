@@ -147,17 +147,9 @@ winpath () {
 # $1: template, $2: {{ variable name }}, $3: replacement string
 template () {
 	key=$(echo "$2" | tr -d '[:space:]')
-	
-	value=""
-	while read -r line
-	do
-		value+=$(echo "$line" | sed -e 's/\\/\\\\/g' -e 's/\//\\\//g' -e 's/&/\\\&/g') # escape slashes
-	done <<< "$3"
-	
-	while read -r line
-	do
-		echo "$line" | sed "s/{{$key}}/${value}/g; s/{{$key:[^}]*}}/${value}/g"
-	done <<< "$1"
+		
+	value=$(echo $3 | sed -e 's/\\/\\\\/g' -e 's/\//\\\//g' -e 's/&/\\\&/g') # escape sed input
+	echo "$1" | sed "s/{{$key}}/$value/g; s/{{$key:[^}]*}}/$value/g"
 }
 
 scratchdir=$(mktemp -d 2>/dev/null || mktemp -d -t 'exposetempdir')
@@ -587,8 +579,7 @@ do
 		
 		post=$(template "$post" type "$type")
 
-		html=$(template "$html" content "$post {{content}}")
-		html=$(echo "$html" | sed -e $'s/{{content}}/\\\n{{content}}/g' ) # add a newline outside templating function to break up long lines
+		html=$(template "$html" content "$post {{content}}" true)
 		
 		((gallery_index++))
 		((j++))
