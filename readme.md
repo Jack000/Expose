@@ -105,6 +105,8 @@ Clicking on each image shows it in full screen mode.
 
 Note that in this theme the text goes above its associated image, except the first image which is used as a masthead.
 
+CSS classes can be passed to the template via the "class" property. eg: use `class: textafter` to add a CSS class that makes the text go after the image.
+
 ### Metadata file
 
 If you want certain variables to apply to an entire gallery, place a metadata.txt (this is configurable) file in the gallery directory. eg. in metadata.txt:
