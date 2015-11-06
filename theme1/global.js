@@ -114,11 +114,8 @@ $(document).ready(function(){
 				if(parseInt($(this).data('imagewidth')) < current_resolution){
 					set_res = parseInt($(this).data('imagewidth'));
 				}
-				var url = $(this).find('img.image').data('url');
-				$(this).find('img.image').not('.blank').prop('src',resourcepath + url+'/'+set_res+'.jpg');
-				$(this).find('video.image').find('source').each(function(){
-					$(this).prop('src',$(this).data('source'))
-				});
+				var url = resourcepath + $(this).find('img.image').data('url');
+				$(this).find('img.image').not('.blank').prop('src',url+'/'+set_res+'.jpg');
 			});
 			
 			// set ui
@@ -293,13 +290,13 @@ function scrollcheck(){
 							var formats = String($(this).data("videoformats")).split(" ");
 							if(formats.length > 0){
 								var vidstring = '<div class="progress active"><div class="bar" style="background-color: '+$(this).parent().data('textcolor')+'"></div></div>';
-								vidstring += '<video class="image" poster="' + url+'/'+set_res+'.jpg" alt="" autoplay="autoplay" loop="loop" preload="auto" width="'+$(this).width()+'" height="'+$(this).height()+'">'
+								vidstring += '<video class="image" poster="' + url+'/'+set_res+'.jpg" alt="" autoplay="autoplay" loop="loop" preload="auto" width="'+$(this).width()+'" height="'+$(this).outerHeight()+'">'
 								
 								$.each(formats, function(i, v){
 									if(v){
 										vformat = video_formats[v];
 										var sourceurl = url+'/'+set_res+'-'+v+'.'+vformat.extension
-										vidstring += '<source src="'+sourceurl+'" type="'+vformat.type+'" data-source="'+sourceurl+'"></source>'
+										vidstring += '<source src="'+sourceurl+'" type="'+vformat.type+'" data-extension="'+(v+'.'+vformat.extension)+'"></source>'
 									}
 								});
 								
