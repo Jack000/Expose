@@ -1,7 +1,7 @@
 var loadnext = 5; // preload next 5 slides
 var loadprev = 2; // keep previous 2 slides in case user scrolls up
 
-var videoloadnext=2 // preload videos less
+var videoloadnext=2; // preload videos less
 
 var resourcepath;
 
@@ -76,7 +76,7 @@ $(document).ready(function(){
 		}
 	});
 	
-	resolution.sort(function(a, b){return b-a});
+	resolution.sort(function(a, b){return b-a;});
 	
 	var selector = '';
 	$.each(resolution, function(i, v){
@@ -285,18 +285,18 @@ function scrollcheck(){
 				var url = resourcepath + img.data('url');
 				if($(this).data('type') == 'video'){
 					if(i-index >= 0 && i-index <= videoloadnext){ // preload next N videos
-						if($(this).find('video').length == 0){
+						if($(this).find('video').length === 0){
 
 							var formats = String($(this).data("videoformats")).split(" ");
 							if(formats.length > 0){
 								var vidstring = '<div class="progress active"><div class="bar" style="background-color: '+$(this).parent().data('textcolor')+'"></div></div>';
-								vidstring += '<video class="image" poster="' + url+'/'+set_res+'.jpg" alt="" autoplay="autoplay" loop="loop" preload="auto" width="'+$(this).width()+'" height="'+$(this).outerHeight()+'">'
+								vidstring += '<video class="image" poster="' + url+'/'+set_res+'.jpg" alt="" autoplay="autoplay" loop="loop" preload="auto" width="'+$(this).width()+'" height="'+$(this).outerHeight()+'">';
 								
 								$.each(formats, function(i, v){
 									if(v){
 										vformat = video_formats[v];
-										var sourceurl = url+'/'+set_res+'-'+v+'.'+vformat.extension
-										vidstring += '<source src="'+sourceurl+'" type="'+vformat.type+'" data-extension="'+(v+'.'+vformat.extension)+'"></source>'
+										var sourceurl = url+'/'+set_res+'-'+v+'.'+vformat.extension;
+										vidstring += '<source src="'+sourceurl+'" type="'+vformat.type+'" data-extension="'+(v+'.'+vformat.extension)+'"></source>';
 									}
 								});
 								
@@ -444,16 +444,17 @@ function fillpolygon(content, polygon){
 			isblock = $(this).css("display") == "block";
 			samefont = $(content).css("font-size") == $(this).css("font-size");
 		}
-		
+
 		// stuff like h1 h2 etc will be difficult to wrap, put them on the first intercept and don't attempt to wrap
+		var coords;
 		if(this.nodeType == 1 && isblock && !samefont){
 			// html, no end clip
 			var clone = $(this).clone();
 			fill.append(clone);
 			
-			var coords = intersect(100*(clone.position().top/content.height()), polygon);
+			coords = intersect(100*(clone.position().top/content.height()), polygon);
 			
-			if(coords.length == 0){
+			if(coords.length === 0){
 				coords = 0;
 			}
 			else{
@@ -465,11 +466,13 @@ function fillpolygon(content, polygon){
 		}
 		else if(this.nodeType == 3 || this.nodeType == 1){ // text node
 			
+                        var text;
+                        
 			if(this.nodeType == 3){
-				var text = this.nodeValue.trim();
+				text = this.nodeValue.trim();
 			}
 			else{
-				var text = $(this).text();
+				text = $(this).text();
 			}
 			
 			if(!text){
@@ -496,13 +499,12 @@ function fillpolygon(content, polygon){
 				if(top > 100){
 					span.remove();
 					return false;
-					 break;
 				}
 				
 				var min = left;
 				var max = 100;
 				
-				var coords = intersect(top, polygon);
+				coords = intersect(top, polygon);
 				
 				if(!coords || coords.length < 2){
 					min = 0;

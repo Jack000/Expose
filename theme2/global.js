@@ -27,11 +27,11 @@ $(document).ready(function(){
 		}
 	});
 	
-	resolution.sort(function(a, b){return a-b});
+	resolution.sort(function(a, b){return a-b;});
 	
 	// remove empty posts
 	$('.post').filter(function() {
-        return $.trim($(this).text()) === '' && $(this).children().length == 0
+        return $.trim($(this).text()) === '' && $(this).children().length === 0;
     }).remove();
 	
 	// set ui colors to first image
@@ -158,17 +158,17 @@ function scrollcheck(){
 			
 			// videos
 			if($(this).data('type') == 'video'){
-				if($(this).find('video').length == 0){
+				if($(this).find('video').length === 0){
 					var formats = String($(this).data("videoformats")).split(" ");
 					if(formats.length > 0){
 						var vidstring = '<div class="progress active"><div class="bar" style="background-color: '+$(this).data('textcolor')+'"></div></div>';
-						vidstring += '<video poster="'+url+'/'+displaywidth+'.jpg" alt="" autoplay="autoplay" loop="loop" preload="auto">'
+						vidstring += '<video poster="'+url+'/'+displaywidth+'.jpg" alt="" autoplay="autoplay" loop="loop" preload="auto">';
 						
 						$.each(formats, function(i, v){
 							if(v){
 								vformat = video_formats[v];
-								var sourceurl = url+'/'+displaywidth+'-'+v+'.'+vformat.extension
-								vidstring += '<source src="'+sourceurl+'" type="'+vformat.type+'" data-source="'+sourceurl+'" data-format="'+v+'" data-extension="'+vformat.extension+'"></source>'
+								var sourceurl = url+'/'+displaywidth+'-'+v+'.'+vformat.extension;
+								vidstring += '<source src="'+sourceurl+'" type="'+vformat.type+'" data-source="'+sourceurl+'" data-format="'+v+'" data-extension="'+vformat.extension+'"></source>';
 							}
 						});
 						
