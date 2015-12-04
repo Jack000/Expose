@@ -906,7 +906,7 @@ do
 		
 		output_url=""
 		
-		ffmpeg -loglevel error -nostdin -i "$filepath" $options -vf "select=gte(n\,1)$filters" -vframes 1 -qscale:v 2 "$scratchdir/temp.jpg"
+		ffmpeg -loglevel error -nostdin -y -i "$filepath" $options -vf "select=gte(n\,1)$filters" -vframes 1 -qscale:v 2 "$scratchdir/temp.jpg"
 		image="$scratchdir/temp.jpg"
 	fi
 	
