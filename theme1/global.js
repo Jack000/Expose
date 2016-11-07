@@ -157,7 +157,8 @@ $(document).ready(function(){
 		var found = false;
 		var sidebar_width = $('#marker').width() + $('#sidebar').width();
 		// account for pixel density and sidebar width
-		var adjusted_screen_width = ($(window).width() - sidebar_width) * window.devicePixelRatio;
+		var device_ratio = window.devicePixelRatio ? window.devicePixelRatio : 1;
+		var adjusted_screen_width = ($(window).width() - sidebar_width) * device_ratio;
 		function setResolution(res){
 			$(res).trigger('click');
 			$(res).addClass('active');
@@ -166,7 +167,7 @@ $(document).ready(function(){
 		$('#resolution li').each(function(i){
 			var val = parseInt($(this).data('res'));
 			var image_density = val / adjusted_screen_width;
-			if(image_density >= 0.7) {
+			if(image_density >= 0.9) {
 				setResolution(this);
 			}
 		});
