@@ -141,9 +141,9 @@ $(document).ready(function(){
 	    }
 	});
   	
-  	if(saved_width){
-  		// used cookie value if set
-  		$('#resolution li').each(function(i){
+	if(saved_width){
+		// used cookie value if set
+		$('#resolution li').each(function(i){
 			var val = parseInt($(this).data('res'));
 			if(saved_width == val){
 				$(this).trigger('click');
@@ -151,23 +151,31 @@ $(document).ready(function(){
 				return false;
 			}
 		});
-  	}
-  	else{
+	}
+	else{
 		// assume large->small order
 		var found = false;
-		$('#resolution ul li').each(function(i){
+		var sidebar_width = $('#marker').width() + $('#sidebar').width();
+		// account for pixel density and sidebar width
+		var adjusted_screen_width = ($(window).width() - sidebar_width) * window.devicePixelRatio;
+		function setResolution(res){
+			$(res).trigger('click');
+			$(res).addClass('active');
+			found=true;
+		}
+		$('#resolution li').each(function(i){
 			var val = parseInt($(this).data('res'));
-			if(screen_width >= val-50){
-				$(this).trigger('click');
-				$(this).addClass('active');
-				found=true;
-				return false;
+			var image_density = val / adjusted_screen_width;
+			if(image_density >= 0.7) {
+				setResolution(this);
 			}
 		});
-		
-		if(!found){
-			$('#resolution li').last().trigger('click');
-		}
+
+	// when largest image has density lower than threashold (large screen in use)
+	if(!found){
+		$('#resolution li').first().trigger('click');
+	}
+
 	}
 		
 	scrollcheck();
