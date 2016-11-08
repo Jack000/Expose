@@ -16,7 +16,7 @@ theme_dir=${theme_dir:-"theme1"}
 
 # widths to scale images to (heights are calculated from source images)
 # you might want to change this for example, if your images aren't full screen on the browser side
-resolution=${resolution:-(3840 2560 1920 1280 1024 640)}
+resolution=(3840 2560 1920 1280 1024 640)
 
 # jpeg compression quality for static photos
 jpeg_quality=${jpeg_quality:-92}
@@ -25,13 +25,13 @@ jpeg_quality=${jpeg_quality:-92}
 autorotate=${autorotate:-true}
 
 # formats to encode to, list in order of preference. Available formats are vp9, vp8, h264, h265, ogv
-video_formats=${video_format:-(h264 vp8)}
+video_formats=(h264 vp8)
 
 # video quality - target bitrates in MBit/s matched to each resolution
 # feel free to ignore this if you don't have any videos.
 # the defaults are about 3x vimeo/youtube bitrates to match photographic quality. Personal tolerance to compression artefacts vary, so adjust to taste.
 
-bitrate=${bitrate:-(40 24 12 7 4 2)}
+bitrate=(40 24 12 7 4 2)
 
 bitrate_maxratio=${bitrate_maxratio:-2} # a multiple of target bitrate to get max bitrate for VBR encoding. must be > 1. Higher ratio gives better quality on scenes with lots of movement. Ratio=1 reduces to CBR encoding
 
@@ -61,7 +61,7 @@ download_readme=${download_readme:-"All rights reserved"}
 disqus_shortname=${disqus_shortname:-""}
 
 # arbitrary list of extensions we'll assume are video files.
-video_extensions=${video_extensions:-(3g2 3gp 3gp2 asf avi dvr-ms exr ffindex ffpreset flv gxf h261 h263 h264 h265 ifv m2t m2ts mts m4v mkv mod mov mp4 mpg mxf tod vob webm wmv y4m)}
+video_extensions=(3g2 3gp 3gp2 asf avi dvr-ms exr ffindex ffpreset flv gxf h261 h263 h264 h265 ifv m2t m2ts mts m4v mkv mod mov mp4 mpg mxf tod vob webm wmv y4m)
 
 sequence_keyword=${sequence_keyword:-"imagesequence"} # if a directory name contains this keyword, treat it as an image sequence and compile it into a video
 sequence_framerate=${sequence_framerate:-24} # sequence framerat
