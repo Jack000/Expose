@@ -33,12 +33,8 @@ The script operates on your current working directory, and outputs a _site direc
 
 ### Configuration
 
-Configuration values and settings can be set by creating `_config.sh` in the top
-level of your project. This allows you to keep a single install of Expose with
-different settings for projects. This will also keep your custom settings safe
-when upgrading Expose.
-
-#### Example
+Site title, theme, jpeg quality and other config values can be edited in expose.sh itself, you can also create `_config.sh` in the top
+level of your project, eg:
 
 ```sh
 site_title="Alternate Site Title"
