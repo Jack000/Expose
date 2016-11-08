@@ -18,8 +18,8 @@ tested on Windows/Cygwin, OSX, and should be fine on Linux
 
 The only dependency is Imagemagick. For videos FFmpeg is also required.
 
-download the repo and alias the script
-	
+Download the repo and alias the script
+
 	alias expose=/script/location/expose.sh
 
 for permanent use add this line to your ~/.profiles, ~/.bashrc etc depending on system
@@ -30,7 +30,22 @@ for permanent use add this line to your ~/.profiles, ~/.bashrc etc depending on 
 	expose
 
 The script operates on your current working directory, and outputs a _site directory.
-Configuration and settings can be edited in the expose.sh file itself
+
+### Configuration
+
+Configuration values and settings can be set by creating `_config.sh` in the top
+level of your project. This allows you to keep a single install of Expose with
+different settings for projects. This will also keep your custom settings safe
+when upgrading Expose.
+
+#### Example
+
+```sh
+site_title="Alternate Site Title"
+theme_dir="theme2"
+social_button=false
+backgroundcolor="#ffffff"
+```
 
 ### Flags
 
@@ -110,11 +125,11 @@ CSS classes can be passed to the template via the "class" property. eg: use `cla
 ### Metadata file
 
 If you want certain variables to apply to an entire gallery, place a metadata.txt (this is configurable) file in the gallery directory. eg. in metadata.txt:
-	
-	width: 19	
+
+	width: 19
 
 ![image grid](http://jack.works/exposeimages/grid.jpg)
-	
+
 This sets all image widths to form a grid. Metadata file parameters are overriden by metadata in individual posts.
 
 ### Advanced usage
@@ -126,13 +141,13 @@ Since we're using FFMpeg for video, we can leverage its filter framework for qui
 	---
 	video-options: -ss 10 -t 5
 	---
-	
+
 This will cut the video 10 seconds from the start, with a duration of 5 seconds.
 
 	---
 	video-filters: lut3d=file=fuji3510.cube
 	---
-	
+
 If you're like me and shoot video in log profile, doing post work can be a pain. I like to globally apply a [film print emulation LUT](http://juanmelara.com.au/print-film-emulation-luts-for-download/) for a consistent look. Note that FFmpeg will look for the LUT file in the working directory you started the script in.
 FFmpeg does not support .look LUTs, so you'll have to convert them to one of .cube .3dl .dat or .m3d
 
@@ -155,7 +170,7 @@ Similar to videos, we can leverage the image editing features of Imagemagick.
 Things like cropping and color correction are very visual operations that are hard to do in command line. Most people would shoot in RAW and export as jpeg anyways, so a lot of ImageMagick's CLI options won't be very useful. However, it is very handy for non-destructively applying effects across an entire gallery, eg:
 
 	---
-	image-options: watermark.png -gravity SouthEast -geometry +50+50 -composite 
+	image-options: watermark.png -gravity SouthEast -geometry +50+50 -composite
 	---
 
 You can use this to apply a watermark on the bottom right corner, with a 50 pixel margin from the edge.
@@ -228,7 +243,7 @@ this will cause {{mycustomvar}} to be replaced by "foo", in this particular post
 #### Additional notes:
 
 Specify default values, in case of unset template variables in the form {{foo:bar}} eg:
-	
+
 	{{width:50}}
 
 will set width to 50 if no specific value has been assigned to it by the time page generation has finished.
