@@ -215,7 +215,7 @@ if [ "$warmup" = true ]
 then
 	topdir_name=$(basename "$topdir" | sed -e 's/^[0-9]*//' | sed -e 's/^[[:space:]]*//;s/[[:space:]]*$//')
 	# create topdir metadata file
-	printf -- "---\n%s\n---" "${topdir_name}" > "$topdir/metadata.$metadata_extension"
+	printf -- "---\n%s\n---" "${topdir_name}" > "$topdir/metadata.txt"
 fi
 
 while read node
@@ -254,7 +254,7 @@ do
 			if [ "$warmup" = true ]
 			then
 				# create dir metadata file
-				printf -- "---\n%s\n---" "${node_name}" > "$node/metadata.$metadata_extension"
+				printf -- "---\n%s\n---" "${node_name}" > "$node/metadata.txt"
 			fi
 		fi
 	else
@@ -266,7 +266,7 @@ do
 			if [ "$warmup" = true ]
 			then
 				# create dir metadata file
-				printf -- "---\n%s\n---" "${node_name}" > "$node/metadata.$metadata_extension"
+				printf -- "---\n%s\n---" "${node_name}" > "$node/metadata.txt"
 			fi
 		fi
 	fi

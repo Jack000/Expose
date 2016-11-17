@@ -51,11 +51,11 @@ The text associated with each image is read from any text file with the same fil
 
 ### Flags
 
-	expose -w
+	expose -w md
 
 The -w flag generates texts files with the given extension parameter for each folder (metadata.xxx) and for each image and video.
 
-	expose -r
+	expose -r txt
 
 The -r flag removes recursively the files with the given extension parameter.
 
