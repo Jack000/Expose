@@ -43,19 +43,27 @@ social_button=false
 backgroundcolor="#ffffff"
 ```
 
+### Adding text
+
+The text associated with each image is read from any text file with the same filename as the image, eg:
+
+![images and text files](http://jack.works/exposeimages/imagetext2.jpg)
+
 ### Flags
+
+	expose -w md
+
+The -w flag generates texts files with the given extension parameter for each folder (metadata.xxx) and for each image and video.
+
+	expose -r txt
+
+The -r flag removes recursively the files with the given extension parameter.
 
 	expose -d
 
 The -d flag enables draft mode, where only a single low resolution is encoded. This can be used for a quick preview or for layout purposes.
 
 Generated images and videos are not overwritten, to do a completely clean build delete the existing _site directory first.
-
-### Adding text
-
-The text associated with each image is read from any text file with the same filename as the image, eg:
-
-![images and text files](http://jack.works/exposeimages/imagetext2.jpg)
 
 ### Sorting
 

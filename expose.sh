@@ -81,9 +81,20 @@ command -v identify >/dev/null 2>&1 || { echo "ImageMagick is a required depende
 video_format_extensions=("h264" "mp4" "h265" "mp4" "vp9" "webm" "vp8" "webm" "ogv" "ogv")
 
 draft=false
+warmup=false
 # the -d flag has been set
-while getopts ":d" opt; do
+while getopts "dw:r:" opt; do
   case "$opt" in
+    w)
+		echo "Warming up: preparing metadata files *.$OPTARG"
+		warmup=true
+		metadata_extension=$OPTARG
+		;;
+    r)
+		echo "Remove *.$OPTARG files"
+		removemeta=true
+		extension=$OPTARG
+		;;
     d)
 		echo "Draft mode On"
 		draft=true
@@ -98,6 +109,14 @@ while getopts ":d" opt; do
       ;;
   esac
 done
+
+
+if [ "$removemeta" = true ]
+then
+	echo "executing 'find . -name "*.$extension" -type f -delete'"
+	find . -name "*.$extension" -type f -delete
+	exit $?
+fi
 
 video_enabled=false
 if command -v ffmpeg >/dev/null 2>&1 && command -v ffprobe >/dev/null 2>&1
@@ -192,6 +211,13 @@ trap cleanup EXIT INT TERM
 
 printf "Scanning directories"
 
+if [ "$warmup" = true ]
+then
+	topdir_name=$(basename "$topdir" | sed -e 's/^[0-9]*//' | sed -e 's/^[[:space:]]*//;s/[[:space:]]*$//')
+	# create topdir metadata file
+	printf -- "---\n%s\n---" "${topdir_name}" > "$topdir/metadata.txt"
+fi
+
 while read node
 do
 	printf "."
@@ -225,6 +251,11 @@ do
 			node_type=0 # dir contains other dirs, it is not a leaf
 		else
 			node_type=1 # dir contains other dirs, but they are imagesequence dirs which are not galleries
+			if [ "$warmup" = true ]
+			then
+				# create dir metadata file
+				printf -- "---\n%s\n---" "${node_name}" > "$node/metadata.txt"
+			fi
 		fi
 	else
 		if [ ! -z "$sequence_keyword" ] && [ $(echo "$node_name" | grep "$sequence_keyword" | wc -l) -gt 0 ]
@@ -232,6 +263,11 @@ do
 			continue # dir is an imagesequence dir, it is in effect a video. Do not add to the path list
 		else
 			node_type=1 # does not contain other dirs, and is not image sequence. It is a leaf
+			if [ "$warmup" = true ]
+			then
+				# create dir metadata file
+				printf -- "---\n%s\n---" "${node_name}" > "$node/metadata.txt"
+			fi
 		fi
 	fi
 	
@@ -241,57 +277,62 @@ do
 	nav_type+=("$node_type")
 done < <(find "$topdir" -type d ! -path "$topdir*/_*" | sort)
 
+if [ "$warmup" = false ]
+then	
 # re-create directory structure
-mkdir -p "$topdir/_site"
+	mkdir -p "$topdir/_site"
+fi
 
 dir_stack=()
 url_rel=""
 nav_url+=(".") # first item in paths will always be $topdir
 
-printf "\nPopulating nav"
+if [ "$warmup" = false ]
+then	
+	printf "\nPopulating nav"
 
-for i in "${!paths[@]}"
-do
-	printf "."
-	
-	if [ "$i" = 0 ]
-	then
-		continue
-	fi
-	
-	path="${paths[i]}"
-	if [ "$i" -gt 1 ]
-	then	
-		if [ "${nav_depth[i]}" -gt "${nav_depth[i-1]}" ]
-		then
-			# push onto stack when we go down a level
-			dir_stack+=("$url_rel")
-		elif [ "${nav_depth[i]}" -lt "${nav_depth[i-1]}" ]
-		then
-			# pop stack with respect to current level
-			diff="${nav_depth[i-1]}"
-			while [ "$diff" -gt "${nav_depth[i]}" ]
-			do
-				unset dir_stack[${#dir_stack[@]}-1]
-				((diff--))
-			done
-		fi
-	fi
-	
-	url_rel=$(echo "${nav_name[$i]}" | sed 's/[^ a-zA-Z0-9]//g;s/ /-/g' | tr '[:upper:]' '[:lower:]')
-	
-	url=""
-	for u in "${dir_stack[@]}"
+	for i in "${!paths[@]}"
 	do
-		url+="$u/"
+		printf "."
+	
+		if [ "$i" = 0 ]
+		then
+			continue
+		fi
+	
+		path="${paths[i]}"
+		if [ "$i" -gt 1 ]
+		then	
+			if [ "${nav_depth[i]}" -gt "${nav_depth[i-1]}" ]
+			then
+				# push onto stack when we go down a level
+				dir_stack+=("$url_rel")
+			elif [ "${nav_depth[i]}" -lt "${nav_depth[i-1]}" ]
+			then
+				# pop stack with respect to current level
+				diff="${nav_depth[i-1]}"
+				while [ "$diff" -gt "${nav_depth[i]}" ]
+				do
+					unset dir_stack[${#dir_stack[@]}-1]
+					((diff--))
+				done
+			fi
+		fi
+	
+		url_rel=$(echo "${nav_name[$i]}" | sed 's/[^ a-zA-Z0-9]//g;s/ /-/g' | tr '[:upper:]' '[:lower:]')
+	
+		url=""
+		for u in "${dir_stack[@]}"
+		do
+			url+="$u/"
+		done
+	
+		url+="$url_rel"
+		mkdir -p "$topdir/_site/$url"
+	
+		nav_url+=("$url")
 	done
-	
-	url+="$url_rel"
-	mkdir -p "$topdir/_site/$url"
-	
-	nav_url+=("$url")
-done
-
+fi
 printf "\nReading files"
 
 # read in each file to populate $gallery variables
@@ -307,7 +348,10 @@ do
 	name="${nav_name[i]}"
 	url="${nav_url[i]}"
 	
-	mkdir -p "$topdir"/_site/"$url"
+		if [ "$warmup" = false ]
+		then
+			mkdir -p "$topdir"/_site/"$url"
+		fi
 
 	index=0
 	
@@ -328,6 +372,15 @@ do
 			trimmed=$(echo "${filename%.*}")
 		fi
 		
+		extension=$(echo "${filename##*.}" | tr '[:upper:]' '[:lower:]')
+
+		if [ "$warmup" = true ] && [ $extension != $metadata_extension ]
+		then
+			# create file's metadata file
+			printf -- "%s\n%s" "$name" "${trimmed}" > "$filedir/$trimmed.$metadata_extension"
+			continue
+		fi
+		
 		image_url=$(echo "$trimmed" | sed 's/[^ a-zA-Z0-9]//g;s/ /-/g' | tr '[:upper:]' '[:lower:]')
 		
 		if [ -d "$file" ] && [ $(echo "$filename" | grep "$sequence_keyword" | wc -l) -gt 0 ]
@@ -335,7 +388,6 @@ do
 			format="sequence"
 			image=$(find "$file" -maxdepth 1 ! -path "$file" -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.gif" -o -iname "*.png" | sort | head -n 1)
 		else
-			extension=$(echo "${filename##*.}" | tr '[:upper:]' '[:lower:]')
 		
 			# we'll trust that extensions aren't lying
 			if [ "$extension" = "jpg" ] || [ "$extension" = "jpeg" ] || [ "$extension" = "png" ] || [ "$extension" = "gif" ]
@@ -446,6 +498,12 @@ do
 	nav_count[i]="$index"
 done
 
+
+if [ "$warmup" = true ]
+then
+	exit
+fi
+
 # build html file for each gallery
 template=$(cat "$scriptdir/$theme_dir/template.html")
 post_template=$(cat "$scriptdir/$theme_dir/post-template.html")
@@ -494,7 +552,7 @@ do
 		fi
 		
 		textfile=$(find "$filedir/$filename".txt "$filedir/$filename".md ! -path "$file_path" -print -quit 2>/dev/null)
-		
+
 		metadata=""
 		content=""
 		if LC_ALL=C file "$textfile" | grep -q text
