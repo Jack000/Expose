@@ -76,6 +76,12 @@ ffmpeg_threads=${ffmpeg_threads:-0} # the -threads option for ffmpeg encode (0=a
 
 command -v convert >/dev/null 2>&1 || { echo "ImageMagick is a required dependency, aborting..." >&2; exit 1; }
 command -v identify >/dev/null 2>&1 || { echo "ImageMagick is a required dependency, aborting..." >&2; exit 1; }
+command -v rsync >/dev/null 2>&1 || { echo "rsync is a required dependency, aborting..." >&2; exit 1; }
+
+if [ "$download_button" = true ]
+then
+	command -v zip >/dev/null 2>&1 || { echo "zip is a required dependency, aborting..." >&2; exit 1; }
+fi
 
 # file extensions for each video format
 video_format_extensions=("h264" "mp4" "h265" "mp4" "vp9" "webm" "vp8" "webm" "ogv" "ogv")

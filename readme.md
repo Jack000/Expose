@@ -16,7 +16,7 @@ tested on Windows/Cygwin, OSX, and should be fine on Linux
 
 ### Installation
 
-The only dependency is Imagemagick. For videos FFmpeg is also required.
+The dependencies are Imagemagick, zip and rsync. For videos FFmpeg is also required.
 
 Download the repo and alias the script
 
