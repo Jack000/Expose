@@ -652,7 +652,7 @@ do
 							break
 						fi
 					done
-					navigation+="<li class=\"gallery $active\"  data-image=\"${gallery_url[gindex]}\"><a href=\"{{basepath}}${nav_url[j]}\"><span>${nav_name[j]}</span></a><ul>{{marker$j}}</ul></li>"
+					navigation+="<li class=\"gallery $active\"  data-image=\"${gallery_url[gindex]}\"><a href=\"{{basepath}}${nav_url[j]}/index.html\"><span>${nav_name[j]}</span></a><ul>{{marker$j}}</ul></li>"
 				fi
 				((remaining--))
 			elif [ "${nav_depth[j]}" = "$depth" ]
@@ -670,7 +670,7 @@ do
 							break
 						fi
 					done
-					substring="<li class=\"gallery $active\" data-image=\"${gallery_url[gindex]}\"><a href=\"{{basepath}}${nav_url[j]}\"><span>${nav_name[j]}</span></a><ul>{{marker$j}}</ul></li>{{marker$parent}}"
+					substring="<li class=\"gallery $active\" data-image=\"${gallery_url[gindex]}\"><a href=\"{{basepath}}${nav_url[j]}/index.html\"><span>${nav_name[j]}</span></a><ul>{{marker$j}}</ul></li>{{marker$parent}}"
 				fi
 				navigation=$(template "$navigation" "marker$parent" "$substring")
 				((remaining--))
