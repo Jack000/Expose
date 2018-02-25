@@ -18,18 +18,45 @@ tested on Windows/Cygwin, OSX, and should be fine on Linux
 
 The only dependency is Imagemagick. For videos FFmpeg is also required.
 
-Download the repo and alias the script
+In Mac OSX:
+Open Terminal
+	``
+	cd $HOME
+	brew install Imagemagick
+	brew install ffmpeg
+	``
 
-	alias expose=/script/location/expose.sh
+Clone the SSH remote url or download the repo. 
+You'll see that the project folder is called Expose.<br>
+`cd Expose` <br>
+`mkdir script` to create a new folder called script <br>
+`mv expose.sh ./script/` to put `expose.sh` inside it <br>
+alias the script to run it using one keyword:<br>
+`alias expose=../script/expose.sh`
 
-for permanent use add this line to your ~/.profiles, ~/.bashrc etc depending on system
+For permanent use add this line to your `~/.profiles`, `~/.bashrc` etc depending on system (usually found under `$HOME`)
+<br>
+## Example
+
+`cd $HOME`<br>
+`find ~/.profile` (or whatever your bash system file is called) <br>
+`vi .profile` to open your bash profile in Vim <br>
+Press `i` to insert characters<br>
+Navigate with arrow keys to final line of doc <br>
+Command + v to paste the alias for expose without quotes or backticks around it<br>
+`:wq` to save and quit<br>
+`source .profile` to ensure you're running the new bash file<br>
+
+Now you're ready to use it in any session!
 
 ### Basic usage
+`cd Expose`<br>
+`mkdir folderofimages`<br>
+Copy images from camera into folder of images<br>
+`cd folderofimages`<br>
+`expose`
 
-	cd ~/folderofimages
-	expose
-
-The script operates on your current working directory, and outputs a _site directory.
+The script operates on the current working directory where the `script/expose.sh` is included, and outputs a _site directory.
 
 ### Configuration
 
