@@ -202,6 +202,12 @@ do
 	fi
 	
 	node_depth=$(echo "$node" | awk -F"/" "{ print NF-$root_depth }")
+
+	# ignore hidden directories
+	if [[ "$node" == "$topdir/."* ]]
+	then
+		continue
+	fi
 	
 	# ignore empty directories
 	if find "$node" -maxdepth 0 -empty | read v
